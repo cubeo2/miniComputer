@@ -155,9 +155,9 @@ void animate(Frame frames[], size_t frameCount) {
 
 void setup() {
 	srOne.SER = 3;
-	srOne.RCLK = 10;
-	srOne.SCLK = 11;
-  srOne.OE = 9;
+	srOne.RCLK = 5;
+	srOne.SCLK = 6;
+  srOne.OE = 4;
   digitalWrite(srOne.OE, LOW); // Enable output
 
   Serial.begin(9600);
