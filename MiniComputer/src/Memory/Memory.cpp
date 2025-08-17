@@ -1,36 +1,56 @@
-#include <SPI.h>
-#include <SD.h>
+#include <Config.h>
 
 // Chip select pin for the Adafruit SD Card Shield
-const int chipSelect = 10;  
+const int chipSelect = MEMORY_CS;  
 
-void setup() {
-  Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect (needed for Leonardo/Micro)
-  }
-
-  Serial.println("Initializing SD card...");
+void memoryInit() {
+  serialLogLn("Initializing SD card...");
 
   // Check if SD card is present and can be initialized
   if (!SD.begin(chipSelect)) {
-    Serial.println("SD card initialization failed!");
+    serialLogLn("SD card initialization failed!");
     return;
   }
-  Serial.println("SD card initialized.");
+  serialLogLn("SD card initialized.");
+}
 
-  // Open (or create) a file named "test.txt"
-  File dataFile = SD.open("test.txt", FILE_WRITE);
-
+void createFile(const char* filename) {
+  File dataFile = SD.open(filename, FILE_WRITE);
   if (dataFile) {
-    dataFile.println("Hello, world! This is a test.");
     dataFile.close();  // Close the file so the data is written
-    Serial.println("Write successful!");
+    serialLog("File created: ");
+    serialLogLn(filename);
   } else {
-    Serial.println("Error opening test.txt");
+    serialLog("Error creating file: ");
+    serialLogLn(filename);
   }
 }
 
-void loop() {
-  // Nothing happens here
+void memoryWrite(const char* filename, const char* data) {
+  File dataFile = SD.open(filename, FILE_WRITE);
+  if (dataFile) {
+    dataFile.println(data);
+    dataFile.close();  // Close the file so the data is written
+    serialLog("Write successful to ");
+    serialLogLn(filename);
+  } else {
+    serialLog("Error opening ");
+    serialLogLn(filename);
+  }
+}
+
+void memoryRead(const char* filename) {
+  File dataFile = SD.open(filename);
+  if (dataFile) {
+    serialLog("Reading from ");
+    serialLogLn(filename);
+    // Read the file until there's nothing else in it
+    while (dataFile.available()) {
+      Serial.write(dataFile.read());
+    }
+    dataFile.close();
+  } else {
+    serialLog("Error opening ");
+    serialLogLn(filename);
+  }
 }

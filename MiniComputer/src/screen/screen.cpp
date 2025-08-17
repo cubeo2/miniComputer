@@ -1,38 +1,7 @@
-#include <Arduino.h>
-#include "screen.h"
-#include "debugScreen.h"
+#include <Config.h>
 
-typedef unsigned char byte;
-
-typedef struct Shift_Register {
-    byte SER;
-    byte RCLK;
-    byte SCLK;
-    byte OE;
-} Shift_Register;
-
-// 4x4 matrix
-typedef struct Frame {
-  byte rows[4];
-  int duration;
-} Frame;
-
-//done by rows
-byte frames[] = {
-    0b11001000,
-    0b10010100,
-    0b00010010,
-    0b11110001
-};
-
-// 0b00001000, 0b00000100, 0b00000010, 0b00000001
-int frameTime = 500;
-Frame animation[] = {
-    {{0b11111000, 0b10010100, 0b10010010, 0b11110001}, frameTime},
-    {{0b11111000, 0b11110100, 0b11110010, 0b11110001}, frameTime},
-    {{0b00001000, 0b01100100, 0b01100010, 0b00000001}, frameTime},
-    {{0b00001000, 0b00000100, 0b00000010, 0b00000001}, frameTime}
-};
+//Remove this later
+Shift_Register srOne;
 
 void shift_register_init(Shift_Register *sr) {
     pinMode(sr->SER, OUTPUT);
@@ -57,8 +26,6 @@ void shift_register_write(Shift_Register * const sr, byte data) {
 	digitalWrite(sr->RCLK, LOW);
 	
 }
-
-Shift_Register srOne;
 
 // based on a frame being one byte (for a 4x4 matrix)
 // Not very efficient, eventaully I should bit pack depending on the dimensions
@@ -97,8 +64,8 @@ void frameDisplay(byte frame[]) {
 
 void printImage(byte frame[]) {
 
-    int shiftMax = 4;
-    size_t frameCount = sizeof(frames) / sizeof(frames[0]);
+    // 
+    size_t frameCount = sizeof(frame) / sizeof(frame[0]);
 
     byte pixelPos = 0b10001000;
 
@@ -152,26 +119,17 @@ void animate(Frame frames[], size_t frameCount) {
   }
 }
 
+void screenSetup() {
+  // Initialize the shift register
+  srOne.SER = SCREEN_SER;
+  srOne.RCLK = SCREEN_RCLK;
+  srOne.SCLK = SCREEN_SCLK;
+  srOne.OE = SCREEN_OE;
 
-void setup() {
-	srOne.SER = 3;
-	srOne.RCLK = 5;
-	srOne.SCLK = 6;
-  srOne.OE = 4;
   digitalWrite(srOne.OE, LOW); // Enable output
-
-  Serial.begin(9600);
-
+  
   shift_register_init(&srOne);
 }
 
-void loop() {
 
-  digitalWrite(srOne.OE, LOW); // Disable output
-
-  size_t animationCount = sizeof(animation) / sizeof(animation[0]);
-  animate(animation, animationCount);
-
-  // printImageRow(frames);
-}
 

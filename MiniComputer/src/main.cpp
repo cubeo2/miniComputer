@@ -1,12 +1,10 @@
-#include <Arduino.h>
-#include "screen/screen.h"
-
-typedef uint8_t byte;
+#include <Config.h>
 
 byte state = 0;
 
 void setup() {
-  Serial.begin(9600);
+  serialOn();
+  serialLog("Setup started...");  
 
 }
 
@@ -14,7 +12,7 @@ void updateScreen() {
   // Update the screen with the current state
   // should possibly calculate a couple a couple of frames, maybe a lot?
   // Maybe another chip maintains the visual output until next time the method is called
-  test();
+
   Serial.println("Updating screen...");
 } 
 void handleInput() {
