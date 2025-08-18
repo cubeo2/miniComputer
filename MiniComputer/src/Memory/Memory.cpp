@@ -1,5 +1,7 @@
 #include <Config.h>
+#include <Debug.h>
 
+#if MEMORY_CONNECT
 // Chip select pin for the Adafruit SD Card Shield
 const int chipSelect = MEMORY_CS;  
 
@@ -54,3 +56,4 @@ void memoryRead(const char* filename) {
     serialLogLn(filename);
   }
 }
+#endif

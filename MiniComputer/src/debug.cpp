@@ -1,5 +1,6 @@
 #include <Config.h>
 
+#if SERIAL_LOG
 void serialOn() {
     Serial.begin(9600);
     while (!Serial) {
@@ -16,6 +17,9 @@ void serialLogLn(const char* message) {
     Serial.println(message);
 }
 
+
+#endif
+#if DEBUG_MEMORY
 void sdLog(const char* message) {
     serialLog("writing to SD card");
     
@@ -28,3 +32,4 @@ void sdLog(const char* message) {
         serialLog("Error opening log.txt on SD card");
     }
 }
+#endif

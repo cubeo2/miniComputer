@@ -1,11 +1,18 @@
 #include <Config.h>
+#include <Debug.h>
+#include <test_SCREEN.h>
+
 
 byte state = 0;
 
 void setup() {
   serialOn();
   serialLog("Setup started...");  
+  memoryInit();
+  screenSetup();
+  serialLog("Setup completed.");
 
+  // memoryWrite("test.txt", "Hello, World!");
 }
 
 void updateScreen() {
@@ -31,16 +38,10 @@ void handleGameController() {
 
 void loop() {
 
-  handleInput();
-  delay(1000);
-  handleGameController();
-    delay(1000);
+  printImage(frames);
+  delay(1000); // Delay to visualize the output
+  animate(animation, sizeof(animation) / sizeof(animation[0]));
 
-  updateAudio();
-    delay(1000);
-
-  updateScreen();
-    delay(1000);
 
 }
 

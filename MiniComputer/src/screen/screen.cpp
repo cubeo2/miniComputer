@@ -1,5 +1,7 @@
 #include <Config.h>
+#include <Debug.h>
 
+#if SCREEN_CONNECT
 //Remove this later
 Shift_Register srOne;
 
@@ -55,8 +57,8 @@ void frameDisplay(byte frame[]) {
       delay(delayTime);
       
       col = (col & 0xF0) >> 1;
-      Serial.println("test");
-      Serial.println(out, BIN);
+      // Serial.println("test");
+      // Serial.println(out, BIN);
     }
     row = (row & 0x0F) >> 1;
   }
@@ -109,13 +111,13 @@ void animate(Frame frames[], size_t frameCount) {
     while (previousMillis + interval >= currentMillis) {
       currentMillis = millis();
       
-      Serial.println("Current Millis: ");
-      Serial.println(currentMillis);
+      // Serial.println("Current Millis: ");
+      // Serial.println(currentMillis);
 
       printImage(frames[i].rows);
     }
-    Serial.print("Completed Frame: ");
-    Serial.println(i);
+    // Serial.print("Completed Frame: ");
+    // Serial.println(i);
   }
 }
 
@@ -130,6 +132,4 @@ void screenSetup() {
   
   shift_register_init(&srOne);
 }
-
-
-
+#endif
