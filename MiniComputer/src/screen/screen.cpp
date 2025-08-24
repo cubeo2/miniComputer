@@ -10,12 +10,17 @@ void shift_register_init(Shift_Register *sr) {
     pinMode(sr->RCLK, OUTPUT);
     pinMode(sr->SCLK, OUTPUT);
     pinMode(sr->OE, OUTPUT);
+
+    serialLogLn("Shift register initialized.");
 }
 
-void shift_register_write(Shift_Register * const sr, byte data) {
+void shift_register_write(Shift_Register * const sr, uint64_t data) {
 	uint8_t counter;
 	byte shiftVal;
-  byte bitsAvailable = 8; 
+  byte bitsAvailable = 40; 
+
+  serialLog("Shifted data: ");
+  serialLogLn(data);
 	
 	for (counter = 0; counter < bitsAvailable; counter++){
 		shiftVal = (data & 0x01); 
@@ -26,80 +31,65 @@ void shift_register_write(Shift_Register * const sr, byte data) {
 	}
 	digitalWrite(sr->RCLK, HIGH);
 	digitalWrite(sr->RCLK, LOW);
-	
 }
 
-// based on a frame being one byte (for a 4x4 matrix)
-// Not very efficient, eventaully I should bit pack depending on the dimensions
-// of the matrix
-void frameDisplay(byte frame[]) {
+void printIage64Test() {
 
-  const byte NUM_SHIFTS = 3;
+  uint64_t pixelPos = 0x8000080000;
 
-  const int delayTime = 1000;
+  uint64_t col = (pixelPos & 0xFFFFE00000);
+  uint32_t row = (pixelPos & 0x00000FFFFF);
 
-  for (int i = 0; i < NUM_SHIFTS; i++) {
-    byte row = 0b00001000;
-
-    for (int j = 0; j < NUM_SHIFTS; j++) {
-      byte col = 0b10000000;
-
-      byte out = (frame[i] & 0xF0) & col;
-
-      if (out) {
-        out |= row;
-        shift_register_write(&srOne, out);
-      }
-
-      digitalWrite(srOne.OE, LOW); // Enable output 
-      delay(delayTime);
-      digitalWrite(srOne.OE, HIGH); // Disable output
-      delay(delayTime);
+  for (int i = 0; i < 20; i++) {
+    for (int j = 0; j < 15; j++) {
+      uint64_t out = col | row;
+      shift_register_write(&srOne, out);
       
-      col = (col & 0xF0) >> 1;
-      // Serial.println("test");
-      // Serial.println(out, BIN);
+      col >>= 1;
+
     }
-    row = (row & 0x0F) >> 1;
+    col = 0x8000000000;
+    row >>= 1;
   }
+  
 }
 
 void printImage(byte frame[]) {
+    digitalWrite(srOne.OE, LOW); // Enable output 
 
+    int delayTime = 1000; // Delay time in milliseconds
     // 
     size_t frameCount = sizeof(frame) / sizeof(frame[0]);
 
-    byte pixelPos = 0b10001000;
+    uint64_t pixelPos = 0x8000080000;
 
-    byte col = (pixelPos & 0xF0);
+    uint64_t col = (pixelPos & 0xFFFFE00000);
 
-    for (int a = 0; a < frameCount; a++) {
-        byte row = (frame[a] & 0x0F);
+    for (int a = 0; a < 4; a++) {
+        uint32_t row = (frame[a] & 0x0F);
         for (int j = 0; j < 4; ++j) {
 
             pixelPos = row | col;
 
-            byte out =  frame[a] & pixelPos;
+            uint64_t out =  frame[a] & pixelPos;
 
             shift_register_write(&srOne, out);
 
-            digitalWrite(srOne.OE, LOW); // Enable output 
-            // delay(delayTime);
-            digitalWrite(srOne.OE, HIGH); // Disable output
-            // delay(delayTime);
-
-            //std::cout << "Pixel Position: ";
-            //printByteBinary(out); // this will be the output to the matrix
             col >>= 1;
+
+            // serialLog("out : ");
+            // serialLogLn(out);
         }
+        serialLog("Frame: ");
+        serialLogLn(frame[a]);
         col = 0b10000000;
         row >>= 1;
     }
 }
 
 void animate(Frame frames[], size_t frameCount) {
-  Serial.print("Frame Count: ");
-  Serial.println(frameCount);
+  serialLog("Frame Count: ");
+  serialLogLn(frameCount);
 
   for (int i = 0; i < frameCount; i++) {
 
@@ -110,9 +100,6 @@ void animate(Frame frames[], size_t frameCount) {
 
     while (previousMillis + interval >= currentMillis) {
       currentMillis = millis();
-      
-      // Serial.println("Current Millis: ");
-      // Serial.println(currentMillis);
 
       printImage(frames[i].rows);
     }

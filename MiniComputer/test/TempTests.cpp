@@ -20,12 +20,12 @@ Frame animation[] = {
 
 Shift_Register srOne;
 
-void loop() {
+// void loop() {
 
-  digitalWrite(srOne.OE, LOW); // Disable output
+//   digitalWrite(srOne.OE, LOW); // Disable output
 
-  size_t animationCount = sizeof(animation) / sizeof(animation[0]);
-  animate(animation, animationCount);
+//   size_t animationCount = sizeof(animation) / sizeof(animation[0]);
+//   animate(animation, animationCount);
 
-  // printImageRow(frames);
-}
+//   // printImageRow(frames);
+// }

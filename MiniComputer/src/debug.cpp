@@ -16,6 +16,9 @@ void serialLog(const char* message) {
 void serialLogLn(const char* message) {
     Serial.println(message);
 }
+void serialLogLn(size_t value) {
+    Serial.println(value);
+}
 
 
 #endif

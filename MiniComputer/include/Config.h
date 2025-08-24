@@ -22,7 +22,7 @@ Pin Configuration ----
 // LED Screen
 #define SCREEN_SER 3
 #define SCREEN_RCLK 5
-#define SCREEN_SCLK 6
+#define SCREEN_SCLK 7
 #define SCREEN_OE 4
 // led screen end
 // Memory
