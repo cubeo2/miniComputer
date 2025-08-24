@@ -16,8 +16,7 @@ struct Image{
 
 };
 
-
-
+#if SCREEN_CONNECT
 void shift_register_init(Shift_Register * sr);
 void shift_register_write(Shift_Register * const sr, byte data);
 
@@ -28,3 +27,12 @@ void animate(Frame frames[], size_t frameCount);
 void screenSetup();
 
 void printIage64Test();
+#else
+inline void shift_register_init(Shift_Register * sr) {}
+inline void shift_register_write(Shift_Register * const sr, byte data) {}
+inline void frameDisplay(byte frame[]) {}
+inline void printImage(byte frame[]) {}
+inline void animate(Frame frames[], size_t frameCount) {}
+inline void screenSetup() {}
+inline void printIage64Test() {}
+#endif

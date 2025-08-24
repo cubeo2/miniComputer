@@ -19,8 +19,6 @@ void serialLogLn(const char* message) {
 void serialLogLn(size_t value) {
     Serial.println(value);
 }
-
-
 #endif
 #if DEBUG_MEMORY
 void sdLog(const char* message) {

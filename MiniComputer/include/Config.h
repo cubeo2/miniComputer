@@ -2,6 +2,9 @@
 
 #include <Arduino.h>
 #include <DataTypes.h>
+#include <Memory.h>
+#include <Screen.h>
+#include <Audio.h>
 
 /*
 This file contains all configuration settings for the Mini Computer project.
@@ -12,8 +15,8 @@ and controller configurations.
 /*
 Devices being used ----
 */ 
-#define SCREEN_CONNECT 1
-#define MEMORY_CONNECT 1
+#define SCREEN_CONNECT 0
+#define MEMORY_CONNECT 0
 #define AUDIO_CONNECT 0
 
 /*
@@ -29,22 +32,6 @@ Pin Configuration ----
 #define MEMORY_CS 10
 // memory end
 //pin configuration end -
-
-/*
-Controller Configuration Settings ----
-*/ 
-#if SCREEN_CONNECT
-#include <Screen.h>
-#endif
-
-#if MEMORY_CONNECT
-#include <Memory.h>
-#endif
-
-#if AUDIO_CONNECT
-#include <Audio.h>
-#endif
-// controller end -
 
 /* 
 Debug Settings ----

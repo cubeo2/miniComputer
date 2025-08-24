@@ -33,10 +33,17 @@ struct AudioBuffer {
     byte2 audioSize = 512;
 };
 
+#if MEMORY_CONNECT
 void memoryInit();
 void createFile(const char* filename);
 void memoryWrite(const char* filename, const char* data);
 void memoryRead(const char* filename);
+#else
+inline void memoryInit() {}
+inline void createFile(const char* filename) {}
+inline void memoryWrite(const char* filename, const char* data) {}
+inline void memoryRead(const char* filename) {}
+#endif
 
 // Possibly add these if there is a need to figure out the frame/pixelcount
 // void frameCount();
