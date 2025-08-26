@@ -95,7 +95,7 @@ bool memoryRead(Buffer &buff, FileMeta &fileMeta)
       fileMeta.nextChunk();
       dataFile.close();
 #if SERIAL_LOG
-      serialLogLn(buff.toString());
+      buff.printString();
 #endif
       return true;
     }

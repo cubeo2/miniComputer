@@ -12,7 +12,7 @@ and controller configurations.
 /*
 Devices being used ----
 */ 
-#define SCREEN_CONNECT 1
+#define SCREEN_CONNECT 0
 #define MEMORY_CONNECT 1
 #define AUDIO_CONNECT 0
 

@@ -13,8 +13,6 @@ writing data to files, and reading data from files.
 #define PACKET_SIZE 40
 #define MAX_FILES 3
 
-byte numFilesMonitored = 0;
-
 // 512 bytes of data for each buffer, or 1 chunk of data as is the standard
 // for SD cards
 
@@ -27,29 +25,23 @@ struct Buffer
     byte2 numBytes = 0;
     Buffer()
     {
-        for (int i = 0; i < BUFFER_SIZE; i++)
+        for (byte2 i = 0; i < BUFFER_SIZE; i++)
         {
             buffer[i] = 0;
         }
     }
 #if SERIAL_LOG
-    String toString()
-    {
-        String result = "Buffer: ";
-        // result += "head=";
-        // result += String(head);
-        // result += ", tail=";
-        // result += String(tail);
-        // result += ", numBytes=";
-        // result += String(numBytes);
-        // result += ", firstBytes=[";
-
-        for (int i = 0; i < numBytes; i++)
-        {
-            result += String(buffer[i], HEX);
+    void printString(){
+        byte2 bytesPrinted = 0;
+        for (byte i = 0; i < BUFFER_SIZE / 8; i++) {
+            for (byte j = 0; j < 8; j++ ) {
+                serialLog(buffer[bytesPrinted]);
+                serialLog(" ");
+                bytesPrinted++;
+            }
+            serialLogLn("");
+            
         }
-        result += "]";
-        return result;
     }
 #endif
 };
@@ -80,7 +72,7 @@ struct FileMeta
     byte2 chunk;
     void nextChunk()
     {
-        chunk += 513;
+        chunk += 512;
     }
 #if SERIAL_LOG
     String toString()
