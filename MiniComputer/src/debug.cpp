@@ -16,8 +16,17 @@ void serialLog(const char* message) {
 void serialLogLn(const char* message) {
     Serial.println(message);
 }
+void serialLog (size_t value) {
+    Serial.print(value);
+}
 void serialLogLn(size_t value) {
     Serial.println(value);
+}
+void serialLog(const String &message) {
+    Serial.print(message.c_str());
+}
+void serialLogLn(const String &message){
+    Serial.print(message.c_str());
 }
 #endif
 #if DEBUG_MEMORY

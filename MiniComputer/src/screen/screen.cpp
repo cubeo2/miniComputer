@@ -1,11 +1,10 @@
 #include <Config.h>
-#include <Debug.h>
 
 #if SCREEN_CONNECT
 //Remove this later
 Shift_Register srOne;
 
-void shift_register_init(Shift_Register *sr) {
+void shift_register_init(Shift_Register* const sr) {
     pinMode(sr->SER, OUTPUT);
     pinMode(sr->RCLK, OUTPUT);
     pinMode(sr->SCLK, OUTPUT);
@@ -14,7 +13,7 @@ void shift_register_init(Shift_Register *sr) {
     serialLogLn("Shift register initialized.");
 }
 
-void shift_register_write(Shift_Register * const sr, uint64_t data) {
+void shift_register_write(Shift_Register* const sr, uint64_t &data) {
 	uint8_t counter;
 	byte shiftVal;
   byte bitsAvailable = 40; 

@@ -1,4 +1,5 @@
-#include <Arduino.h>
+#include <Config.h>
+
 
 struct Shift_Register {
     byte SER;
@@ -17,8 +18,8 @@ struct Image{
 };
 
 #if SCREEN_CONNECT
-void shift_register_init(Shift_Register * sr);
-void shift_register_write(Shift_Register * const sr, byte data);
+void shift_register_init(Shift_Register* sr);
+void shift_register_write(Shift_Register* const sr, byte &data);
 
 void frameDisplay(byte frame[]);
 void printImage(byte frame[]);
@@ -28,8 +29,8 @@ void screenSetup();
 
 void printIage64Test();
 #else
-inline void shift_register_init(Shift_Register * sr) {}
-inline void shift_register_write(Shift_Register * const sr, byte data) {}
+inline void shift_register_init(Shift_Register* sr) {}
+inline void shift_register_write(Shift_Register* const sr, byte data) {}
 inline void frameDisplay(byte frame[]) {}
 inline void printImage(byte frame[]) {}
 inline void animate(Frame frames[], size_t frameCount) {}

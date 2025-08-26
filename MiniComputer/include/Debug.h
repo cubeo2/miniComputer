@@ -3,16 +3,18 @@
 
 #if SERIAL_LOG
 void serialOn();
-void serialLog(const char* msg);
-void serialLogLn(const char* msg);
-void serialLog(size_t msg);
-void serialLogLn(size_t msg);
+void serialLog(const char* message);
+void serialLogLn(const char* message);
+void serialLog(const String &message);
+void serialLogLn(const String &message);
+void serialLog(size_t message);
+void serialLogLn(size_t message);
 #else
 inline void serialOn() {}
-inline void serialLog(const char* msg) {}
-inline void serialLogLn(const char* msg) {}
-inline void serialLog(size_t msg){}
-inline void serialLogLn(size_t msg){}
+inline void serialLog(const char* message) {}
+inline void serialLogLn(const char* message) {}
+inline void serialLog(size_t message){}
+inline void serialLogLn(size_t message){}
 #endif
 
 #if DEBUG_MEMORY
