@@ -4,6 +4,7 @@
 // Chip select pin for the Adafruit SD Card Shield
 const int chipSelect = MEMORY_CS;
 
+//Initialize Memory
 void memoryInit()
 {
   serialLogLn("Initializing SD card...");
@@ -17,18 +18,39 @@ void memoryInit()
   serialLogLn("SD card initialized.");
 }
 
-void createFile(const char* filename) {
+//Creates File with input name
+void createFile(const char *filename)
+{
   File dataFile = SD.open(filename, FILE_WRITE);
-  if (dataFile) {
-    dataFile.close();  // Close the file so the data is written
+  if (dataFile)
+  {
+    dataFile.close(); // Close the file so the data is written
     serialLog("File created: ");
     serialLogLn(filename);
-  } else {
+  }
+  else
+  {
     serialLog("Error creating file: ");
     serialLogLn(filename);
   }
 }
 
+// Creates Folder
+bool createFolder(const char *folderName)
+{
+  String folder = "/";
+  folder += folderName;
+
+  if (SD.mkdir((char*)folder.c_str()))
+  {
+    serialLog("Created folder ");
+    serialLogLn(folder);
+    return true;
+  }
+  return false;
+}
+
+// Writes data to the user's filename
 void memoryWrite(const char *filename, const char *data)
 {
   File dataFile = SD.open(filename, FILE_WRITE);
@@ -46,10 +68,10 @@ void memoryWrite(const char *filename, const char *data)
   }
 }
 
-// Gets and stores up to 512B in buffer
-bool memoryRead(Buffer &buff, FileMeta &file)
+// Gets and stores up to 512B in buffer on Arduino
+bool memoryRead(Buffer &buff, FileMeta &fileMeta)
 {
-  const char *filename = file.filename.c_str();
+  const char *filename = fileMeta.filename.c_str();
   File dataFile = SD.open(filename);
 
   if (dataFile)
@@ -57,10 +79,10 @@ bool memoryRead(Buffer &buff, FileMeta &file)
     serialLog("Reading from ");
     serialLogLn(filename);
 
-    byte2 numBytes = dataFile.size() - file.chunk;
+    byte2 numBytes = dataFile.size() - fileMeta.chunk;
     buff.numBytes = numBytes;
 
-    if (dataFile.seek(file.chunk))
+    if (dataFile.seek(fileMeta.chunk))
     {
       if (numBytes > 0 && BUFFER_SIZE > numBytes)
       {
@@ -70,7 +92,7 @@ bool memoryRead(Buffer &buff, FileMeta &file)
       {
         dataFile.read(buff.buffer, BUFFER_SIZE);
       }
-      file.nextChunk();
+      fileMeta.nextChunk();
       dataFile.close();
 #if SERIAL_LOG
       serialLogLn(buff.toString());
@@ -86,22 +108,29 @@ bool memoryRead(Buffer &buff, FileMeta &file)
   }
 }
 
-//NEEDS OPTOMIZATION
-bool writeBuffer(Buffer &buff, const byte &data){
+/*
+Ring Buffer Functions ---
+*/
+// NEEDS OPTIMIZATION should be able to be more dynamic, sending specific amount to memory
+// Writes to buffer one Byte at a time
+bool writeBuffer(Buffer &buff, const byte &data)
+{
   byte2 nextHead = (buff.head + 1) % BUFFER_SIZE;
-  if (nextHead == buff.tail){
-    //Buffer full
+  if (nextHead == buff.tail)
+  {
+    // Buffer full
     return false;
   }
   buff.buffer[buff.head] = data;
   buff.head = nextHead;
   return true;
 }
-
-bool readBuffer(Buffer &buff, byte &data){
-
-  if (buff.head == buff.tail) {
-    //Buffer empty
+// Reads data from buffer one byte at a time
+bool readBuffer(Buffer &buff, byte &data)
+{
+  if (buff.head == buff.tail)
+  {
+    // Buffer empty
     return false;
   }
   data = buff.buffer[buff.tail];
@@ -109,9 +138,102 @@ bool readBuffer(Buffer &buff, byte &data){
 
   return true;
 }
+// Ring buffer functions end -
 
-DataTypes interpretMemory(Buffer &buff) {
+bool fillPacket(Buffer &buff, DataPacket &dataPacket)
+{
+  if (buff.head == buff.tail)
+  {
+    // Buffer empty
+    return false;
+  }
+  dataPacket.dataType = (DataTypes)buff.buffer[buff.tail];
+  buff.tail++;
 
+  return true;
+}
+
+// Gets image to print on screen
+bool getImage (Buffer &buff) {
+
+}
+
+/*
+This
+*/
+DataTypes interpretMemory(DataPacket &dataPacket)
+{
+  switch (dataPacket.dataType)
+  {
+  case image:
+    
+    break;
+  case animation:
+
+    break;
+  case audio:
+
+    break;
+  case text:
+
+    break;
+  case object:
+
+    break;
+  case controls:
+
+    break;
+  case run:
+
+    break;
+  default:
+
+    break;
+  }
   return image;
+}
+DataTypes interpretMemory(Buffer &buff)
+{
+  switch (buff.buffer[buff.tail])
+  {
+  case image:
+
+    break;
+  case animation:
+
+    break;
+  case audio:
+
+    break;
+  case text:
+
+    break;
+  case object:
+
+    break;
+  case controls:
+
+    break;
+  case run:
+
+    break;
+  default:
+
+    break;
+  }
+  return image;
+}
+
+
+/*
+Functions related to interpreting data from the buffer. This includes
+a switching function for determining what type of data is in memory,
+and then a function for cleaning the buffer based on what type of 
+data is present.
+*/
+
+bool cleanBuffer (Buffer &buff)
+{
+
 }
 #endif

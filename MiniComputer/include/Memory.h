@@ -10,6 +10,10 @@ writing data to files, and reading data from files.
 */
 
 #define BUFFER_SIZE 512
+#define PACKET_SIZE 40
+#define MAX_FILES 3
+
+byte numFilesMonitored = 0;
 
 // 512 bytes of data for each buffer, or 1 chunk of data as is the standard
 // for SD cards
@@ -57,12 +61,22 @@ enum DataTypes : byte
     audio,
     text,
     object,
-    controls
+    controls,
+    run
+};
+//Data packet to be sent between Arduinos (image is 38B)
+struct DataPacket {
+    byte packet[PACKET_SIZE];
+    byte2 meta;
+    DataTypes dataType;
 };
 
+// File meta Data. This struct allows a maximum of MAXIMUM_FILES files to be monitored 
+// at a time.
 struct FileMeta
 {
     String filename;
+
     byte2 chunk;
     void nextChunk()
     {
@@ -76,24 +90,6 @@ struct FileMeta
         result += filename;
         result += ", chunk=";
         result += String(chunk);
-        return result;
-    }
-#endif
-};
-
-struct dataMeta
-{
-    byte2 meta;
-    DataTypes dataType;
-#if SERIAL_LOG
-
-    String toString()
-    {
-        String result = "dataMeta: ";
-        result += "meta=";
-        result += String(meta);
-        result += ", dataType=";
-        result += String((int)dataType); // cast enum to int
         return result;
     }
 #endif
@@ -127,6 +123,8 @@ bool readBuffer(Buffer &buff, byte &data);
 void clearBuffer();
 void clearTransferBuffer();
 DataTypes interpretMemory(Buffer &buff);
+DataTypes interpretMemory(DataPacket &dataPacket);
+
 
 #else
 inline void memoryInit() {}
