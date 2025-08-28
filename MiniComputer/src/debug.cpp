@@ -1,7 +1,7 @@
 #include <Config.h>
 
 #if SERIAL_LOG
-void serialOn() {
+void startLog() {
     Serial.begin(9600);
     while (!Serial) {
         ; // wait for serial port to connect (needed for Leonardo/Micro)
@@ -9,23 +9,23 @@ void serialOn() {
     Serial.println("Serial communication started.");
 }
 
-void serialLog(const char* message) {
+void Log(const char* message) {
     Serial.print(message);
 }
 
-void serialLogLn(const char* message) {
+void Logln(const char* message) {
     Serial.println(message);
 }
-void serialLog (size_t value) {
+void Log(size_t value) {
     Serial.print(value);
 }
-void serialLogLn(size_t value) {
+void Logln(size_t value) {
     Serial.println(value);
 }
-void serialLog(const String &message) {
+void Log(const String &message) {
     Serial.print(message.c_str());
 }
-void serialLogLn(const String &message){
+void Logln(const String &message){
     Serial.print(message.c_str());
 }
 #endif

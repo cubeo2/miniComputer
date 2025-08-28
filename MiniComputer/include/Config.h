@@ -13,9 +13,9 @@ and controller configurations.
 Devices being used ----
 */ 
 #define SCREEN_CONNECT 0
-#define MEMORY_CONNECT 1
+#define MEMORY_CONNECT 0
 #define AUDIO_CONNECT 0
-
+#define CONTROLLER_CONNECT 1
 
 // devices being used end -
 /*
@@ -54,9 +54,14 @@ Pin Configuration ----
 // Memory
 #define MEMORY_CS 10
 // memory end
+// Controller
+#define DIRECTION_BUTTONS A1
+#define ACTION_BUTTONS A0
+// controller end
 //pin configuration end -
 
 #include <Screen.h>
 #include <Memory.h>
 #include <Audio.h>
 #include <Communication.h>
+#include <Controller.h>

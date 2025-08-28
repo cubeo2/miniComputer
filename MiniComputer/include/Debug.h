@@ -2,19 +2,21 @@
 #include <Config.h>
 
 #if SERIAL_LOG
-void serialOn();
-void serialLog(const char* message);
-void serialLogLn(const char* message);
-void serialLog(const String &message);
-void serialLogLn(const String &message);
-void serialLog(size_t message);
-void serialLogLn(size_t message);
+void startLog();
+void Log(const char* message);
+void Logln(const char* message);
+void Log(const String &message);
+void Logln(const String &message);
+void Log(size_t message);
+void Logln(size_t message);
 #else
-inline void serialOn() {}
-inline void serialLog(const char* message) {}
-inline void serialLogLn(const char* message) {}
-inline void serialLog(size_t message){}
-inline void serialLogLn(size_t message){}
+inline void startLog() {}
+inline void Log(const char* message) {}
+inline void Logln(const char* message) {}
+inline void Log(size_t message){}
+inline void Logln(size_t message){}
+inline void Log(String message){}
+inline void Logln(String message){}
 #endif
 
 #if DEBUG_MEMORY

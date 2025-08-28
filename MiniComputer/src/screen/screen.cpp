@@ -10,7 +10,7 @@ void shift_register_init(Shift_Register* const sr) {
     pinMode(sr->SCLK, OUTPUT);
     pinMode(sr->OE, OUTPUT);
 
-    serialLogLn("Shift register initialized.");
+    Logln("Shift register initialized.");
 }
 
 void shift_register_write(Shift_Register* const sr, uint64_t &data) {
@@ -18,8 +18,8 @@ void shift_register_write(Shift_Register* const sr, uint64_t &data) {
 	byte shiftVal;
   byte bitsAvailable = 40; 
 
-  serialLog("Shifted data: ");
-  serialLogLn(data);
+  Log("Shifted data: ");
+  Logln(data);
 	
 	for (counter = 0; counter < bitsAvailable; counter++){
 		shiftVal = (data & 0x01); 
@@ -76,19 +76,19 @@ void printImage(byte frame[]) {
 
             col >>= 1;
 
-            // serialLog("out : ");
-            // serialLogLn(out);
+            // Log("out : ");
+            // Logln(out);
         }
-        serialLog("Frame: ");
-        serialLogLn(frame[a]);
+        Log("Frame: ");
+        Logln(frame[a]);
         col = 0b10000000;
         row >>= 1;
     }
 }
 
 void animate(Frame frames[], size_t frameCount) {
-  serialLog("Frame Count: ");
-  serialLogLn(frameCount);
+  Log("Frame Count: ");
+  Logln(frameCount);
 
   for (int i = 0; i < frameCount; i++) {
 

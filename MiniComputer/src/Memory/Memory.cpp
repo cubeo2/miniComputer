@@ -7,15 +7,15 @@ const int chipSelect = MEMORY_CS;
 //Initialize Memory
 void memoryInit()
 {
-  serialLogLn("Initializing SD card...");
+  Logln("Initializing SD card...");
 
   // Check if SD card is present and can be initialized
   if (!SD.begin(chipSelect))
   {
-    serialLogLn("SD card initialization failed!");
+    Logln("SD card initialization failed!");
     return;
   }
-  serialLogLn("SD card initialized.");
+  Logln("SD card initialized.");
 }
 
 //Creates File with input name
@@ -25,13 +25,13 @@ void createFile(const char *filename)
   if (dataFile)
   {
     dataFile.close(); // Close the file so the data is written
-    serialLog("File created: ");
-    serialLogLn(filename);
+    Log("File created: ");
+    Logln(filename);
   }
   else
   {
-    serialLog("Error creating file: ");
-    serialLogLn(filename);
+    Log("Error creating file: ");
+    Logln(filename);
   }
 }
 
@@ -43,8 +43,8 @@ bool createFolder(const char *folderName)
 
   if (SD.mkdir((char*)folder.c_str()))
   {
-    serialLog("Created folder ");
-    serialLogLn(folder);
+    Log("Created folder ");
+    Logln(folder);
     return true;
   }
   return false;
@@ -58,13 +58,13 @@ void memoryWrite(const char *filename, const char *data)
   {
     dataFile.println(data);
     dataFile.close(); // Close the file so the data is written
-    serialLog("Write successful to ");
-    serialLogLn(filename);
+    Log("Write successful to ");
+    Logln(filename);
   }
   else
   {
-    serialLog("Error opening ");
-    serialLogLn(filename);
+    Log("Error opening ");
+    Logln(filename);
   }
 }
 
@@ -76,8 +76,8 @@ bool memoryRead(Buffer &buff, FileMeta &fileMeta)
 
   if (dataFile)
   {
-    serialLog("Reading from ");
-    serialLogLn(filename);
+    Log("Reading from ");
+    Logln(filename);
 
     byte2 numBytes = dataFile.size() - fileMeta.chunk;
     buff.numBytes = numBytes;
@@ -102,8 +102,8 @@ bool memoryRead(Buffer &buff, FileMeta &fileMeta)
   }
   else
   {
-    serialLog("Error opening ");
-    serialLogLn(filename);
+    Log("Error opening ");
+    Logln(filename);
     return false;
   }
 }
