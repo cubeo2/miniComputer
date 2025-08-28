@@ -14,12 +14,15 @@ Buffer buffer1;
 void setup()
 {
     startLog();
+
     Log("Setup started...");
     memoryInit();
     screenSetup();
     Logln("Setup completed.");
     Logln("");
-    // memoryWrite("test.txt", "Hello, World!");
+
+    // Start communicating via SPI and CS pins
+    
 }
 
 bool first = true;

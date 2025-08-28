@@ -4,18 +4,17 @@
 // Chip select pin for the Adafruit SD Card Shield
 const int chipSelect = MEMORY_CS;
 
-//Initialize Memory
-void memoryInit()
-{
-  Logln("Initializing SD card...");
+// Connect to SD memory
+void connectMemory() {
+    Logln("Connecting to SD card...");
 
   // Check if SD card is present and can be initialized
-  if (!SD.begin(chipSelect))
+  if (!SD.begin(MEMORY_CS))
   {
-    Logln("SD card initialization failed!");
+    Logln("SD card connection failed!");
     return;
   }
-  Logln("SD card initialized.");
+  Logln("SD card connected.");
 }
 
 //Creates File with input name

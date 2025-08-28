@@ -1,6 +1,5 @@
 #pragma once
 #include <Config.h>
-#include <SPI.h>
 #include <SD.h>
 
 /*

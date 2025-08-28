@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include <DataTypes.h>
+#include <SPI.h>
 
 /*
 This file contains all configuration settings for the Mini Computer project.
@@ -51,13 +52,14 @@ Pin Configuration ----
 #define SCREEN_SCLK 7
 #define SCREEN_OE 4
 // led screen end
-// Memory
-#define MEMORY_CS 10
-// memory end
 // Controller
 #define DIRECTION_BUTTONS A1
 #define ACTION_BUTTONS A0
 // controller end
+// Communication
+#define MEMORY_CS 10
+#define CONTROLLER_CS 13
+//communication en
 //pin configuration end -
 
 #include <Screen.h>
