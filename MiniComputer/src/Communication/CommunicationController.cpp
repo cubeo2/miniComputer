@@ -45,7 +45,7 @@ void checkSlaveConnection(DeviceMeta deviceMeta[])
   }
 }
 
-void sendData(DeviceMeta device, byte data)
+void sendByte(DeviceMeta device, byte data)
 {
   digitalWrite(device.csPin, LOW);
   delay(500);

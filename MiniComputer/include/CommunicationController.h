@@ -7,7 +7,7 @@ ISR(SPI_STC_vect);
 void startMaster();
 void checkSlaveConneciton(DeviceMeta deviceMeta[]);
 void ready();
-void sendData(DeviceMeta device, byte data);
+void sendbyte(DeviceMeta device, byte data);
 
 //Transfer functions
 // bool transferData(Buffer &data);

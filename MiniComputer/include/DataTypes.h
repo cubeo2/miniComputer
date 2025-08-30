@@ -96,8 +96,12 @@ enum DataTypes : byte
 //Data packet to be sent between Arduinos (image is 38B)
 struct DataPacket {
     byte packet[PACKET_SIZE];
+    // auxilary information about outgoing data
     byte2 meta;
     DataTypes dataType;
+    DataPacket(){
+        
+    }
 };
 
 // File meta Data. This struct allows a maximum of MAXIMUM_FILES files to be monitored 
