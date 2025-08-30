@@ -1,4 +1,6 @@
 #include <Config.h>
+#include <CommunicationPeripheral.h>
+#include <Controller.h>
 
 /*
 THIS TRANSLATION UNIT HAS CODE RELATED TO THE LITERAL HANDHELD CONTROLLER. ITS MAIN PURPOSE IS TO SEND THE APPROPRIATE DATA TO THE MASTER MICROCONTROLLER.
@@ -187,17 +189,34 @@ bool checkForCommand()
   return 1;
 }
 
-#if CONTROLLER
 void setup()
 {
   startLog();
   Log("Setup started...");
+  startSlave();
   Logln("Setup completed.");
   Logln("");
 }
+
 void loop()
 {
-  checkForCommand();
+
+  //CHARLY TEST
+  // int i = 0;
+  // int j = 0;
+  // int k = 0;
+  // bool once = true;
+
+  // if (once)
+  // {
+  //   for (int x = 0; x < 5; x++)
+  //   {
+  //     auto buttons = new Button[4]{
+  //         {i, j, NONE},
+  //         {i + 1, j + 1, NONE}};
+      
+  //   }
+  // }
+  // once = false;
 }
-#endif
 #endif

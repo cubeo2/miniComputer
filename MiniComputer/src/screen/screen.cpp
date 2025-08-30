@@ -1,4 +1,5 @@
 #include <Config.h>
+#include <Screen.h>
 
 #if SCREEN_CONNECT
 //Remove this later

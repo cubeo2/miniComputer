@@ -1,11 +1,17 @@
 #pragma once
 #include <Config.h>
-#include <Wire.h>
+#include <Wire.h> 
 
 #if COMMUNICATION_PROTO
+ISR(SPI_STC_vect);
+void startMaster();
+void checkSlaveConneciton(DeviceMeta deviceMeta[]);
+void ready();
+void sendData(DeviceMeta device, byte data);
+
 //Transfer functions
-bool transferData(Buffer &data);
-bool receiveData(Buffer &data);
+// bool transferData(Buffer &data);
+// bool receiveData(Buffer &data);
 bool memoryType();
 #if MEMORY_CONNECT
 

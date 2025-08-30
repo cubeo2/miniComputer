@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Arduino.h>
-#include <DataTypes.h>
 #include <SPI.h>
 
 /*
@@ -13,8 +12,8 @@ and controller configurations.
 /*
 Devices being used ----
 */ 
-#define SCREEN_CONNECT 0
-#define MEMORY_CONNECT 0
+#define SCREEN_CONNECT 1
+#define MEMORY_CONNECT 1
 #define AUDIO_CONNECT 0
 #define CONTROLLER_CONNECT 1
 
@@ -27,22 +26,27 @@ General Settings
 // General settings end -
 
 /* 
-Debug Settings ----
+Settings ----
 */
-// Serial/SD Logging
-#define SERIAL_LOG 1
+// LOGGING
+#define SERIAL_LOG 0
 #include <Debug.h>
 #define LOG_SD 0
-// serial/sd logging end
-//DEBUG Settings
+// logging end -
+// DEBUG
 #define DEBUG_CONTROLLER 0
 #define DEBUG_SCREEN 0
 #define DEBUG_AUDIO 0
 #if MEMORY_CONNECT && LOG_SD && SERIAL_LOG
 #define DEBUG_MEMORY 1
 #endif
-//debug settings end -
-
+// debug settings end -
+// MEMORY
+#define BUFFER_SIZE 512
+#define PACKET_SIZE 40
+#define MAX_FILES 3
+// memory end -
+// Settings end -
 /*
 Pin Configuration ----
 */
@@ -52,18 +56,22 @@ Pin Configuration ----
 #define SCREEN_SCLK 7
 #define SCREEN_OE 4
 // led screen end
-// Controller
+// Remote Controller
 #define DIRECTION_BUTTONS A1
 #define ACTION_BUTTONS A0
 // controller end
 // Communication
 #define MEMORY_CS 10
-#define CONTROLLER_CS 13
-//communication en
+#define AUDIO_CS 11
+#define SCREEN_CS 12
+#define REMOTE_CONT_CS 9
+#define PERIPHERAL_CS 10
+//communication end
 //pin configuration end -
 
-#include <Screen.h>
-#include <Memory.h>
-#include <Audio.h>
-#include <Communication.h>
-#include <Controller.h>
+// #include <Screen.h>
+// #include <Memory.h>
+// #include <Audio.h>
+
+// #include <Controller.h>
+#include <DataTypes.h>

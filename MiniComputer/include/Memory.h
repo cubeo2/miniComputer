@@ -8,83 +8,16 @@ using an SD card. It includes functions for initializing the SD card, creating f
 writing data to files, and reading data from files.
 */
 
-#define BUFFER_SIZE 512
-#define PACKET_SIZE 40
-#define MAX_FILES 3
+
+
+FileMeta file = {"image.txt", 0};
+Buffer buffer1;
 
 // 512 bytes of data for each buffer, or 1 chunk of data as is the standard
 // for SD cards
 
 // This ring buffer contains 512B of raw data from the SD card
-struct Buffer
-{
-    byte buffer[BUFFER_SIZE];
-    byte2 head = 0;
-    byte2 tail = 0;
-    byte2 numBytes = 0;
-    Buffer()
-    {
-        for (byte2 i = 0; i < BUFFER_SIZE; i++)
-        {
-            buffer[i] = 0;
-        }
-    }
-#if SERIAL_LOG
-    void printString(){
-        byte2 bytesPrinted = 0;
-        for (byte i = 0; i < BUFFER_SIZE / 8; i++) {
-            for (byte j = 0; j < 8; j++ ) {
-                Log(buffer[bytesPrinted]);
-                Log(" ");
-                bytesPrinted++;
-            }
-            Logln("");
-            
-        }
-    }
-#endif
-};
 
-enum DataTypes : byte
-{
-    image,
-    animation,
-    audio,
-    text,
-    object,
-    controls,
-    run
-};
-//Data packet to be sent between Arduinos (image is 38B)
-struct DataPacket {
-    byte packet[PACKET_SIZE];
-    byte2 meta;
-    DataTypes dataType;
-};
-
-// File meta Data. This struct allows a maximum of MAXIMUM_FILES files to be monitored 
-// at a time.
-struct FileMeta
-{
-    String filename;
-
-    byte2 chunk;
-    void nextChunk()
-    {
-        chunk += 512;
-    }
-#if SERIAL_LOG
-    String toString()
-    {
-        String result = "FileMeta: ";
-        result += "filename=";
-        result += filename;
-        result += ", chunk=";
-        result += String(chunk);
-        return result;
-    }
-#endif
-};
 
 // struct ImageBuffer {
 //     byte images[IMAGE_COUNT][IMAGE_SIZE];

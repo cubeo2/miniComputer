@@ -1,4 +1,5 @@
 #include <Config.h>
+#include <Memory.h>
 
 #if MEMORY_CONNECT
 // Chip select pin for the Adafruit SD Card Shield

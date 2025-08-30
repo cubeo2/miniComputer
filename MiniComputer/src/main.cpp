@@ -1,5 +1,6 @@
 #include <Config.h>
 #include <Debug.h>
+#include <CommunicationController.h>
 #include <test_SCREEN.h>
 
 // GLOBAL TIME VARIABLES
@@ -8,16 +9,23 @@ unsigned long lastMillis;
 
 byte state = 0;
 
-FileMeta file = {"image.txt", 0};
-Buffer buffer1;
+// volatile byte receivedData = 0;
+// byte receivedFlag = 0;
+// volatile bool dataReady = false;
 
+DeviceMeta deviceMeta[] = {
+    {CONTROLLER, REMOTE_CONT_CS, false},
+    {SCREEN, SCREEN_CS, false},
+    {MEMORY, MEMORY_CS, false},
+    {AUDIO, AUDIO_CS, false}};
+    
 void setup()
 {
+    startMaster();
     startLog();
 
     Log("Setup started...");
-    memoryInit();
-    screenSetup();
+    
     Logln("Setup completed.");
     Logln("");
 
@@ -28,7 +36,8 @@ void setup()
 bool first = true;
 void loop()
 {
-
+   
+    sendData(deviceMeta[CONTROLLER], 0x05);
     /*
     CONTROLLER TESTS
     */
