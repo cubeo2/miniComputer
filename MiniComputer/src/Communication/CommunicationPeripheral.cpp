@@ -1,5 +1,5 @@
 #include <Config.h>
-#include <CommunicationPeripheral.h>
+#include <Communication/CommPeripheral.h>
 
 
 #if COMMUNICATION_PROTO

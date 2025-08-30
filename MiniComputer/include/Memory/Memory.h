@@ -1,6 +1,7 @@
 #pragma once
 #include <Config.h>
 #include <SD.h>
+#include <DataTypes/MemoryDataTypes.h>
 
 /*
 This header file contains functions for initializing and managing memory operations

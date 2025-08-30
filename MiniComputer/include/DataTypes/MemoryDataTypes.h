@@ -1,59 +1,6 @@
 #pragma once
 #include <Config.h>
 
-// Basic Data Types
-typedef unsigned char byte;
-typedef unsigned short byte2;
-typedef uint32_t byte4;
-typedef uint64_t byte8;
-
-// The screen can only show 40 bit images (on or off)
-// typedef byte image[5];
-
-// COMMUNICATION TYPES
-typedef byte transferPacket[32];
-enum CommFlag : byte {
-    CHECK_CONNECTION,
-    REQUEST_TO_SEND,
-    READY,
-    RECEIVED,
-    SENT,  // may be redundant with request to send
-    RESET
-};
-enum Device : byte {
-    CONTROLLER,
-    SCREEN,
-    MEMORY,
-    AUDIO
-};
-struct DeviceMeta {
-    Device type;
-    byte csPin;
-    bool status;
-};
-
-// CONTROLLER TYPES
-enum ButtonType : byte
-{
-  NONE,
-  LEFT,
-  UP,
-  RIGHT,
-  DOWN,
-  START,
-  RED,
-  BLUE,
-  RED_BLUE,
-  INVALID
-};
-struct Button
-{
-  int lo;
-  int hi;
-  ButtonType type;
-};
-
-// MEMORY TYPES
 struct Buffer
 {
     byte buffer[BUFFER_SIZE];
@@ -93,14 +40,46 @@ enum DataTypes : byte
     controls,
     run
 };
-//Data packet to be sent between Arduinos (image is 38B)
+//Data packet to be sent between Arduinos (image is 40B)
 struct DataPacket {
     byte packet[PACKET_SIZE];
     // auxilary information about outgoing data
     byte2 meta;
     DataTypes dataType;
-    DataPacket(){
-        
+    DataPacket(DataTypes type){
+        dataType = type;
+        meta = 0;
+        switch (type) {
+            case image:
+                packet[40] = 0;
+                break;
+            // animations have a max size of 200B for now
+            case animation:
+                packet[200]; 
+                break;
+            // NEEDS TO BE CHANGED BASED ON AUDIO HARDWARE
+            case audio:
+                packet[32]; 
+                break;
+            // NEEDS TO BE CHANGED BASED ON TEXT HARDWARE
+            case text:
+                packet[32];
+                break;
+            // NEEDS TO BE CHANGED BASED ON OBJECT HARDWARE
+            case object:
+                packet[32]; 
+                break;
+            // NEEDS OPTIMIZATION
+            // control data passes 2 bytes, one for each button cluster
+            case controls:
+                packet[2]; 
+                break;
+            // DEFAULT SHOULD NEVER RUN
+            default:
+                packet[0]; 
+                break;
+        }
+        memset(packet, 0, sizeof(packet));
     }
 };
 
@@ -113,7 +92,7 @@ struct FileMeta
     byte2 chunk;
     void nextChunk()
     {
-        chunk += 512;
+        chunk += BUFFER_SIZE;
     }
 #if SERIAL_LOG
     String toString()

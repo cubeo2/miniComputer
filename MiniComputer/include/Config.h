@@ -30,7 +30,7 @@ Settings ----
 */
 // LOGGING
 #define SERIAL_LOG 0
-#include <Debug.h>
+#include <Utils/Debug.h>
 #define LOG_SD 0
 // logging end -
 // DEBUG
@@ -74,4 +74,4 @@ Pin Configuration ----
 // #include <Audio.h>
 
 // #include <Controller.h>
-#include <DataTypes.h>
+#include <DataTypes/DataTypes.h>

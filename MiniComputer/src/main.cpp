@@ -1,7 +1,6 @@
 #include <Config.h>
-#include <Debug.h>
-#include <CommunicationController.h>
-#include <test_SCREEN.h>
+#include <Communication/CommController.h>
+#include <Tests/test_SCREEN.h>
 
 // GLOBAL TIME VARIABLES
 unsigned long currentMillis;
@@ -13,11 +12,13 @@ byte state = 0;
 // byte receivedFlag = 0;
 // volatile bool dataReady = false;
 
-DeviceMeta deviceMeta[] = {
+DeviceMeta deviceMeta[] = 
+{
     {CONTROLLER, REMOTE_CONT_CS, false},
     {SCREEN, SCREEN_CS, false},
     {MEMORY, MEMORY_CS, false},
-    {AUDIO, AUDIO_CS, false}};
+    {AUDIO, AUDIO_CS, false}
+};
     
 void setup()
 {
@@ -37,7 +38,7 @@ bool first = true;
 void loop()
 {
    
-    sendData(deviceMeta[CONTROLLER], 0x05);
+    // sendData(deviceMeta[CONTROLLER], 0x05);
     /*
     CONTROLLER TESTS
     */

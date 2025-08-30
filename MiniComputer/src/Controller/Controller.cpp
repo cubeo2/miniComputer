@@ -1,6 +1,6 @@
 #include <Config.h>
-#include <CommunicationPeripheral.h>
-#include <Controller.h>
+#include <Communication/CommPeripheral.h>
+#include <Controller/Controller.h>
 
 /*
 THIS TRANSLATION UNIT HAS CODE RELATED TO THE LITERAL HANDHELD CONTROLLER. ITS MAIN PURPOSE IS TO SEND THE APPROPRIATE DATA TO THE MASTER MICROCONTROLLER.
@@ -11,7 +11,7 @@ NEEDS OPTIMIZATION - VARIABLE SIZES
 
 // LIST OF BUTTONS AND STATES WITH A BUFFER RANGE OF WHAT THE ADC CAN BE
 Button buttons[] = {
-    {950, 1023, NONE}, // DIRECTION BUTTONS
+    {950, 1023, NO_PRESS}, // DIRECTION BUTTONS
     {581, 750, DOWN},
     {401, 580, RIGHT},
     {251, 400, UP},
@@ -51,7 +51,7 @@ ButtonType decodeADC(const int &adc, const Button *buttons, const byte &pin)
       }
     }
   }
-  return NONE;
+  return NO_PRESS;
 }
 
 // ENSURES A STABLE ADC VALUE IS ESTABLISHED BEFORE CHECKING WHICH BUTTON HAS BEEN PUSHED. Written by Chat GPT 4.1 and modified by Blair C. Tate (aka Cubeo).

@@ -1,11 +1,13 @@
 #include <Config.h>
-#include <CommunicationController.h>
+#include <Communication/CommController.h>
+#include <DataTypes/CommDataTypes.h>
+#include <DataTypes/MemoryDataTypes.h>
 
 #if COMMUNICATION_PROTO
 
 // volatile byte receivedData = 0;
 // byte receivedFlag = 0;
-// volatile bool dataReady = false;   
+// volatile bool dataReady = false;
 
 /*
 MASTER FUNCTIONS
@@ -21,8 +23,8 @@ void checkSlaveConnection(DeviceMeta deviceMeta[])
     for (int j = 0; j < 2; j++)
     {
       digitalWrite(deviceMeta[i].csPin, LOW);
-      SPI.transfer(CHECK_CONNECTION);
-      byte response = SPI.transfer(CHECK_CONNECTION);
+      SPI.transfer(CHECK_STATUS);
+      byte response = SPI.transfer(CHECK_STATUS);
       digitalWrite(deviceMeta[i].csPin, HIGH);
 
       Log("Response received from: ");
@@ -45,17 +47,25 @@ void checkSlaveConnection(DeviceMeta deviceMeta[])
   }
 }
 
-void sendByte(DeviceMeta device, byte data)
+void sendData(DeviceMeta device, DataPacket &data)
 {
-  digitalWrite(device.csPin, LOW);
-  delay(500);
+  const byte2 delayMicro = 100;
+  const byte packetSize = sizeof(data.packet) / sizeof(data.packet[0]);
+  byte response = 0;
+
   Log("Sending data to device on pin: ");
   Logln(device.csPin);
 
-  // SPI.transfer(0x01); 
-  byte response = SPI.transfer(data);
-  digitalWrite(device.csPin, HIGH);
-  
+  for (byte i = 0; i < packetSize; i++)
+  {
+    digitalWrite(device.csPin, LOW);
+    SPI.transfer(data.packet[i]);
+    delayMicroseconds(delayMicro);
+
+    response = SPI.transfer(data.packet[i]);
+    digitalWrite(device.csPin, HIGH);
+  }
+
   Log("Response received from: ");
   Logln(device.type);
   Log("Response: ");
@@ -63,6 +73,23 @@ void sendByte(DeviceMeta device, byte data)
 
   delay(1000);
 }
+
+// Check peripheral status, returns peripheral response flag
+CommFlag checkPerphStatus(DeviceMeta &device)
+{
+  digitalWrite(device.csPin, LOW);
+  CommFlag response;
+  response.commFlag = SPI.transfer(CHECK_STATUS);
+  digitalWrite(device.csPin, HIGH);
+
+  Log("Response received from: ");
+  Logln(device.type);
+  Log("Response: ");
+  Logln(response.commFlag);
+
+  return response;
+}
+
 // Start SPI master
 void startMaster()
 {

@@ -1,5 +1,5 @@
 #include <config.h>
-#include <Audio.h>
+#include <Audio/Audio.h>
 
 int speakerPin = 9;   // drives transistor
 int analogPin = A0;   // reads resistor/pot

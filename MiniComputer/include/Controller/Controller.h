@@ -1,6 +1,7 @@
 #pragma once
 #include <Config.h>
-#include <Compiler.h>
+#include <DataTypes/ControllerDataTypes.h>
+#include <Utils/Compiler.h>
 
 #if CONTROLLER_CONNECT
 // void controllerInit();
