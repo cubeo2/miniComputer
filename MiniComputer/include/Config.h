@@ -15,7 +15,7 @@ Devices being used ----
 #define SCREEN_CONNECT 1
 #define MEMORY_CONNECT 1
 #define AUDIO_CONNECT 0
-#define CONTROLLER_CONNECT 1
+#define REMOTE_CONNECT 1
 
 // devices being used end -
 /*

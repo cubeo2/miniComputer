@@ -2,25 +2,26 @@
 #include <Config.h>
 #include <Wire.h> 
 #include <DataTypes/CommDataTypes.h>
+#include <DataTypes/MemoryDataTypes.h>
 
 #if COMMUNICATION_PROTO
-ISR(SPI_STC_vect);
-void startMaster();
-void checkSlaveConneciton(DeviceMeta deviceMeta[]);
-void ready();
-void sendbyte(DeviceMeta device, byte data);
+void startCommController();
+CommFlag checkPerphStatus(DeviceMeta &device);
+bool isPeripheralReady(DeviceMeta &device);
+void requestToSend(DeviceMeta &device);
+bool sendData(DeviceMeta &device, DataPacket &data);
 
-//Transfer functions
-// bool transferData(Buffer &data);
-// bool receiveData(Buffer &data);
-bool memoryType();
 #if MEMORY_CONNECT
-
+bool transferData(Buffer &data);
+bool receiveData(Buffer &data);
 #else
-
+bool transferData(Buffer &data){}
+bool receiveData(Buffer &data){}
 #endif
 #else
-inline bool transferData(Buffer &data){}
-inline bool receiveData(byte &data){}
-inline bool memoryType(){}
+inline void startCommController(){}
+inline CommFlag checkPerphStatus(DeviceMeta &device){}
+inline bool isPeripheralReady(DeviceMeta &device){}
+inline void requestToSend(DeviceMeta &device){}
+inline bool sendData(DeviceMeta &device, DataPacket &data){}
 #endif

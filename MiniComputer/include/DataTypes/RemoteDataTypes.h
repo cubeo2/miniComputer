@@ -4,6 +4,7 @@
 enum ButtonType : byte
 {
   NO_PRESS,
+  INVALID_BUTTON,
   LEFT,
   UP,
   RIGHT,
@@ -11,8 +12,7 @@ enum ButtonType : byte
   START,
   RED,
   BLUE,
-  RED_BLUE,
-  INVALID
+  RED_BLUE
 };
 struct Button
 {

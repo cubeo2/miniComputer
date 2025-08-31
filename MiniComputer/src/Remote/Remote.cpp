@@ -1,13 +1,13 @@
 #include <Config.h>
 #include <Communication/CommPeripheral.h>
-#include <Controller/Controller.h>
+#include <Remote/Remote.h>
 
 /*
 THIS TRANSLATION UNIT HAS CODE RELATED TO THE LITERAL HANDHELD CONTROLLER. ITS MAIN PURPOSE IS TO SEND THE APPROPRIATE DATA TO THE MASTER MICROCONTROLLER.
 
 NEEDS OPTIMIZATION - VARIABLE SIZES
 */
-#if CONTROLLER_CONNECT
+#if REMOTE_CONNECT
 
 // LIST OF BUTTONS AND STATES WITH A BUFFER RANGE OF WHAT THE ADC CAN BE
 Button buttons[] = {
@@ -16,7 +16,7 @@ Button buttons[] = {
     {401, 580, RIGHT},
     {251, 400, UP},
     {100, 250, LEFT},
-    {0, 50, NONE}, // ACTION BUTTONS
+    {0, 50, NO_PRESS}, // ACTION BUTTONS
     {801, 1023, START},
     {600, 720, RED},
     {200, 599, BLUE},
@@ -163,8 +163,7 @@ bool checkForCommand()
   int buttonVal = stableRead(action);
   if (buttonVal == errorVal)
   {
-    pressedButtons[0] = INVALID;
-    ;
+    pressedButtons[0] = INVALID_BUTTON;
     return 0;
   }
   pressedButtons[0] = decodeADC(buttonVal, buttons, action);
@@ -178,7 +177,7 @@ bool checkForCommand()
   pressedButtons[1] = decodeADC(buttonVal, buttons, direction);
   if (buttonVal == errorVal)
   {
-    pressedButtons[0] = INVALID;
+    pressedButtons[0] = INVALID_BUTTON;
     ;
     return 0;
   }
@@ -187,36 +186,5 @@ bool checkForCommand()
 #endif
   delay(10);
   return 1;
-}
-
-void setup()
-{
-  startLog();
-  Log("Setup started...");
-  startSlave();
-  Logln("Setup completed.");
-  Logln("");
-}
-
-void loop()
-{
-
-  //CHARLY TEST
-  // int i = 0;
-  // int j = 0;
-  // int k = 0;
-  // bool once = true;
-
-  // if (once)
-  // {
-  //   for (int x = 0; x < 5; x++)
-  //   {
-  //     auto buttons = new Button[4]{
-  //         {i, j, NONE},
-  //         {i + 1, j + 1, NONE}};
-      
-  //   }
-  // }
-  // once = false;
 }
 #endif

@@ -1,5 +1,8 @@
 #include <Config.h>
 #include <Communication/CommController.h>
+#include <Memory/SDmem.h>
+#include <Memory/Buffer.h>
+#include <Remote/Remote.h>
 #include <Tests/test_SCREEN.h>
 
 // GLOBAL TIME VARIABLES
@@ -8,30 +11,25 @@ unsigned long lastMillis;
 
 byte state = 0;
 
-// volatile byte receivedData = 0;
-// byte receivedFlag = 0;
-// volatile bool dataReady = false;
-
 DeviceMeta deviceMeta[] = 
 {
     {CONTROLLER, REMOTE_CONT_CS, false},
     {SCREEN, SCREEN_CS, false},
-    {MEMORY, MEMORY_CS, false},
-    {AUDIO, AUDIO_CS, false}
+    {MAIN_MEMORY, MEMORY_CS, false},
+    {SPEAKER, AUDIO_CS, false}
 };
     
 void setup()
 {
-    startMaster();
-    startLog();
-
-    Log("Setup started...");
     
+    startLog();
+    Log("Setup started...");
+
+    startCommController();
+    // connectMemory();
+
     Logln("Setup completed.");
     Logln("");
-
-    // Start communicating via SPI and CS pins
-    
 }
 
 bool first = true;

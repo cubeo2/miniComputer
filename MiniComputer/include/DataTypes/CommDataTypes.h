@@ -3,48 +3,61 @@
 
 typedef byte transferPacket[32];
 
-enum FlagType : byte {
+enum FlagType : byte
+{
     NONE,
     CHECK_STATUS,
-    REQUEST_TO_SEND,
     READY,
+    NOT_READY,
+    REQUEST_TO_SEND,
+    SENDING,
+    SENT,
+    RECEIVING,
     RECEIVED,
-    SENT,  // may be redundant with request to send
     RESET,
 };
 
-enum CommPriority : byte {
+enum CommPriority : byte
+{
     ONE,
     TWO,
     THREE
 };
 
-struct CommFlag {
+struct CommFlag
+{
     byte commFlag;
-    CommFlag() {
+
+    CommFlag()
+    {
         commFlag = 0;
     }
-    byte checkPriority() {
+    byte checkPriority()
+    {
         byte priority = 0xF0 & commFlag;
         priority >>= 4;
         return priority;
     }
-    byte checkFlag() {
+    byte checkFlag()
+    {
         byte flag = 0x0F & commFlag;
         return flag;
     }
-    void setFlag(FlagType type, CommPriority priority) {
+    void setFlag(FlagType type, CommPriority priority)
+    {
         commFlag = (priority << 4) | type;
     }
 };
 
-enum Device : byte {
+enum Device : byte
+{
     CONTROLLER,
     SCREEN,
-    MEMORY,
-    AUDIO
+    MAIN_MEMORY,
+    SPEAKER
 };
-struct DeviceMeta {
+struct DeviceMeta
+{
     Device type;
     byte csPin;
     bool status;

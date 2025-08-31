@@ -1,11 +1,9 @@
 #pragma once
 #include <Config.h>
-#include <DataTypes/ControllerDataTypes.h>
-#include <Utils/Compiler.h>
+#include <DataTypes/RemoteDataTypes.h>
 
-#if CONTROLLER_CONNECT
-// void controllerInit();
-void sendInstruction();
+
+#if REMOTE_CONNECT
 ButtonType decodeADC(const int &adc, const Button *buttons, const byte &pin);
 int stableRead(int pin);
 void sendInstruction();
@@ -13,6 +11,9 @@ void logButtonsPressed(ButtonType *types);
 bool checkForCommand();
 
 #else
-inline void controllerInit(){}
+inline ButtonType decodeADC(const int &adc, const Button *buttons, const byte &pin){}
+inline int stableRead(int pin){}
 inline void sendInstruction(){}
+inline void logButtonsPressed(ButtonType *types){}
+inline bool checkForCommand(){}
 #endif
