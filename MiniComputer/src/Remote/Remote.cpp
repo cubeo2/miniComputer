@@ -151,40 +151,44 @@ void logButtonsPressed(ButtonType *types)
 #endif
 
 // CHECKS THE INPUT PINS FOR SIGNALS FROM THE CONTROLLER IN ORDER TO DETERMINE WHICH BUTTONS HAVE BEEN PRESSED.
-bool checkForCommand()
+int checkForCommand()
 {
-  ButtonType pressedButtons[2];
-
-  int action = A0;
-  int direction = A1;
+  int pressedButtons = 0;
+  int actionButtons = 0;
+  int directionButtons = 0;
+  int buttonVal = 0;
   const int errorVal = 2000;
 
   // Checks the value of the action buttons pin
-  int buttonVal = stableRead(action);
+  buttonVal = stableRead(ACTION_BUTTONS);
   if (buttonVal == errorVal)
   {
-    pressedButtons[0] = INVALID_BUTTON;
-    return 0;
+    pressedButtons = INVALID_BUTTON;
+    return pressedButtons;
   }
-  pressedButtons[0] = decodeADC(buttonVal, buttons, action);
+  actionButtons = decodeADC(buttonVal, buttons, ACTION_BUTTONS);
+  pressedButtons = actionButtons;
 
-  if (pressedButtons[0] == START)
+  if (actionButtons == START)
   {
     Logln("Start button pressed");
-    return 1;
+    return pressedButtons;
   }
-  buttonVal = stableRead(direction);
-  pressedButtons[1] = decodeADC(buttonVal, buttons, direction);
+  // Checks the value of the direction buttons pin
+  buttonVal = stableRead(DIRECTION_BUTTONS);
   if (buttonVal == errorVal)
   {
-    pressedButtons[0] = INVALID_BUTTON;
-    ;
-    return 0;
+    pressedButtons = INVALID_BUTTON;
+    return pressedButtons;
   }
+  directionButtons = decodeADC(buttonVal, buttons, DIRECTION_BUTTONS);
 #if SERIAL_LOG
   logButtonsPressed(pressedButtons);
 #endif
   delay(10);
-  return 1;
+
+  pressedButtons = ((pressedButtons & 0xF0) | directionButtons << 4) | actionButtons;
+
+  return pressedButtons;
 }
 #endif

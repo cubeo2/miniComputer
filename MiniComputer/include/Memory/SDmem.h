@@ -11,7 +11,7 @@ writing data to files, and reading data from files.
 
 #if MEMORY_CONNECT
 // Memory initialization function
-void connectMemory();
+void connectSD();
 // SD card functions
 void createFile(const char *filename);
 bool createFolder(const char *folderName);
@@ -26,7 +26,7 @@ bool cleanBuffer (Buffer &buff);
 
 #else
 // Memory initialization function
-inline void connectMemory(){}
+inline void connectSD(){}
 // SD card functions
 inline void createFile(const char *filename){}
 inline bool createFolder(const char *folderName){}

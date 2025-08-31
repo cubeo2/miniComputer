@@ -84,8 +84,6 @@ bool sendData(DeviceMeta &device, DataPacket &data)
   return true;
 }
 
-
-
 #if MEMORY_CONNECT
 bool transferData(Buffer &data)
 {
@@ -115,6 +113,10 @@ bool transferData(Buffer &data)
 
 bool receiveData(Buffer &data)
 {
+}
+
+void checkStatus(){
+  
 }
 #endif
 #endif

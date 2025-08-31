@@ -11,6 +11,7 @@ bool isPeripheralReady(DeviceMeta &device);
 void requestToSend(DeviceMeta &device);
 bool sendData(DeviceMeta &device, DataPacket &data);
 
+void checkStatus();
 #if MEMORY_CONNECT
 bool transferData(Buffer &data);
 bool receiveData(Buffer &data);
@@ -24,4 +25,5 @@ inline CommFlag checkPerphStatus(DeviceMeta &device){}
 inline bool isPeripheralReady(DeviceMeta &device){}
 inline void requestToSend(DeviceMeta &device){}
 inline bool sendData(DeviceMeta &device, DataPacket &data){}
+inline void checkStatus();
 #endif

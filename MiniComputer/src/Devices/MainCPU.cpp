@@ -9,8 +9,6 @@
 unsigned long currentMillis;
 unsigned long lastMillis;
 
-byte state = 0;
-
 DeviceMeta deviceMeta[] = 
 {
     {CONTROLLER, REMOTE_CONT_CS, false},
@@ -21,12 +19,11 @@ DeviceMeta deviceMeta[] =
     
 void setup()
 {
-    
     startLog();
     Log("Setup started...");
 
     startCommController();
-    // connectMemory();
+    connectSD();
 
     Logln("Setup completed.");
     Logln("");
@@ -35,6 +32,8 @@ void setup()
 bool first = true;
 void loop()
 {
+
+    
    
     // sendData(deviceMeta[CONTROLLER], 0x05);
     /*
