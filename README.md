@@ -125,8 +125,9 @@ Since the development of a mini-computer OS system is wide in scope, there are m
 
 ---
 
-<details open>
+<details close>
 <summary> Project Build Details </summary>
+
 ## Prerequisites
 
 In order to run this project, you will need to either create the physical architecture as described in this project, or utilize electronic/Arduino simulation software like Wokwi or CRUMB. If you decide to build the physical device, it is recommended to use the PlatformIO framework (as i did), which is easily found in Visual Studio Code (or something similar). 
