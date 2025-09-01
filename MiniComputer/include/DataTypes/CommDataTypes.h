@@ -1,8 +1,12 @@
 #pragma once
 #include <Config.h>
 
+/*
+This file contains data types used for communication between devices in the Mini Computer project.
+*/
 typedef byte transferPacket[32];
 
+// Communication Flag Types
 enum FlagType : byte
 {
     NONE,
@@ -17,6 +21,7 @@ enum FlagType : byte
     RESET,
 };
 
+// Communication Priorities
 enum CommPriority : byte
 {
     ONE,
@@ -24,6 +29,7 @@ enum CommPriority : byte
     THREE
 };
 
+// Communication Flag Structure, used to encapsulate flag and priority information in a single byte.
 struct CommFlag
 {
     byte commFlag;
@@ -49,6 +55,7 @@ struct CommFlag
     }
 };
 
+// Device Types
 enum Device : byte
 {
     CONTROLLER,
@@ -56,6 +63,8 @@ enum Device : byte
     MAIN_MEMORY,
     SPEAKER
 };
+
+// Device Metadata Structure, used to store information about each device. Specifically, its type, chip select pin, and status (connected or not).
 struct DeviceMeta
 {
     Device type;

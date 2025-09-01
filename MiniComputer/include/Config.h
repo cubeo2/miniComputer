@@ -1,12 +1,13 @@
 #pragma once
-
 #include <Arduino.h>
-#include <SPI.h>
 
 /*
 This file contains all configuration settings for the Mini Computer project.
 It includes settings for connected devices, pin configurations, debug options,
 and controller configurations.
+
+The use of pre-processing macros (ex. SCREEN_CONNECT) allows for easy enabling or
+disabling of features and devices, making the codebase adaptable to different hardware setups without requiring significant changes to the source code.
 */
 
 /*
@@ -16,6 +17,7 @@ Devices being used ----
 #define MEMORY_CONNECT 1
 #define AUDIO_CONNECT 0
 #define REMOTE_CONNECT 1
+#define LCD_CONNECT 1
 
 // devices being used end -
 /*
@@ -56,6 +58,14 @@ Pin Configuration ----
 #define SCREEN_SCLK 7
 #define SCREEN_OE 4
 // led screen end
+// LCD Screen
+#define LCD_RS 12
+#define LCD_EN 11
+#define LCD_D4 5
+#define LCD_D5 4
+#define LCD_D6 3
+#define LCD_D7 2
+// lcd screen end
 // Remote Controller
 #define DIRECTION_BUTTONS A1
 #define ACTION_BUTTONS A0

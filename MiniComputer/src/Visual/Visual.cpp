@@ -1,22 +1,28 @@
 #include <Config.h>
 #include <Visual/Visual.h>
 
+/*
+This file contains function definitions for controlling an LED screen using shift registers in the Mini Computer project.
+*/
+
 #if SCREEN_CONNECT
 // Remove this later
 Shift_Register srOne;
+
+// Sets up the screen by initializing the shift register and configuring the pins
 void screenSetup()
 {
-  // Initialize the shift register
   srOne.SER = SCREEN_SER;
   srOne.RCLK = SCREEN_RCLK;
   srOne.SCLK = SCREEN_SCLK;
   srOne.OE = SCREEN_OE;
 
-  digitalWrite(srOne.OE, LOW); // Enable output
+  digitalWrite(srOne.OE, LOW);
 
   shift_register_init(&srOne);
 }
 
+// Initializes the shift register by setting the pin modes
 void shift_register_init(Shift_Register *const sr)
 {
   pinMode(sr->SER, OUTPUT);
@@ -27,6 +33,7 @@ void shift_register_init(Shift_Register *const sr)
   Logln("Shift register initialized.");
 }
 
+// Writes data to the shift register and updates the output pins
 void shift_register_write(Shift_Register *const sr, uint64_t &data)
 {
   uint8_t counter;
@@ -48,6 +55,7 @@ void shift_register_write(Shift_Register *const sr, uint64_t &data)
   digitalWrite(sr->RCLK, LOW);
 }
 
+// Test function to print a specific pattern on the screen -> TEST
 void printIage64Test()
 {
 
@@ -70,16 +78,14 @@ void printIage64Test()
   }
 }
 
+// Prints a single frame (4 rows) to the LED screen. Was a test function for a 4x4 LED matrix.
 void printImage(byte frame[])
 {
-  digitalWrite(srOne.OE, LOW); // Enable output
+  digitalWrite(srOne.OE, LOW);
 
-  int delayTime = 1000; // Delay time in milliseconds
-  //
+  int delayTime = 1000; 
   size_t frameCount = sizeof(frame) / sizeof(frame[0]);
-
   uint64_t pixelPos = 0x8000080000;
-
   uint64_t col = (pixelPos & 0xFFFFE00000);
 
   for (int a = 0; a < 4; a++)
@@ -87,17 +93,10 @@ void printImage(byte frame[])
     uint32_t row = (frame[a] & 0x0F);
     for (int j = 0; j < 4; ++j)
     {
-
       pixelPos = row | col;
-
       uint64_t out = frame[a] & pixelPos;
-
       shift_register_write(&srOne, out);
-
       col >>= 1;
-
-      // Log("out : ");
-      // Logln(out);
     }
     Log("Frame: ");
     Logln(frame[a]);
@@ -106,6 +105,7 @@ void printImage(byte frame[])
   }
 }
 
+// Animates a sequence of frames on the LED screen, each for a specified duration
 void animate(Frame frames[], size_t frameCount)
 {
   Log("Frame Count: ");

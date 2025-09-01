@@ -76,31 +76,6 @@ int stableRead(int pin)
   return lastADC;
 }
 
-void sendInstruction()
-{
-  // // V1
-  // if (digitalRead(LEFT_BUTTON))
-  // {
-  //     Logln("Left Button Pushed");
-  // }
-  // else if (digitalRead(UP_BUTTON))
-  // {
-  //     Logln("Up Button Pushed");
-  // }
-  // else if (digitalRead(RIGHT_BUTTON))
-  // {
-  //     Logln("Right Button Pushed");
-  // }
-  // else if (digitalRead(DOWN_BUTTON))
-  // {
-  //     Logln("Down Button Pushed");
-  // }
-  // else if (digitalRead(ENTER_BUTTON))
-  // {
-  //     Logln("Enter Button Pushed");
-  // }
-}
-
 #if SERIAL_LOG
 // LOGS WHICH BUTTONS HAVE BEEN PRESSED TO SERIAL OUTPUT.
 void logButtonsPressed(ButtonType *types)

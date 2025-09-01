@@ -3,8 +3,9 @@
 #include <DataTypes/MemoryDataTypes.h>
 
 /*
-Ring Buffer Functions ---
+This file contains functions for managing ring buffer(s) in the Mini Computer project.
 */
+
 // NEEDS OPTIMIZATION should be able to be more dynamic, sending specific amount to memory
 // Writes to buffer one Byte at a time
 bool writeBuffer(Buffer &buff, const byte &data)
@@ -32,8 +33,8 @@ bool readBuffer(Buffer &buff, byte &data)
 
   return true;
 }
-// Ring buffer functions end -
 
+// Fills a DataPacket with data from the Buffer, starting with the data type byte
 bool fillPacket(Buffer &buff, DataPacket &dataPacket)
 {
   if (buff.head == buff.tail)
@@ -47,6 +48,7 @@ bool fillPacket(Buffer &buff, DataPacket &dataPacket)
   return true;
 }
 
+// Cleans the buffer by setting all bytes to zero
 bool cleanBuffer (Buffer &buff)
 {
   memset(buff.buffer, 0, sizeof(buff.buffer));

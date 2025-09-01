@@ -4,9 +4,7 @@
 #include <DataTypes/MemoryDataTypes.h>
 
 /*
-This header file contains functions for initializing and managing memory operations
-using an SD card. It includes functions for initializing the SD card, creating files,
-writing data to files, and reading data from files.
+This file contains functions for initializing and managing memory operations using an SD card. It includes functions for initializing the SD card, creating files, writing data to files, and reading data from files.
 */
 
 #if MEMORY_CONNECT

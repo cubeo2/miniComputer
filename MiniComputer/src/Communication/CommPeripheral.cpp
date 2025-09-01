@@ -3,6 +3,11 @@
 
 #if COMMUNICATION_PROTO
 
+/*
+This translation unit contains code related to the SPI peripheral device functionality.
+It handles SPI communication, including receiving data via interrupts and managing buffers.
+*/
+
 // test variables
 volatile Buffer incomingBuffer(430);
 Buffer internalBuffer(430);
@@ -10,6 +15,7 @@ Buffer internalBuffer(430);
 Buffer outputBuffer(40);
 volatile byte dataOut = 0;
 
+// SPI interrupt service routine to handle incoming data
 ISR(SPI_STC_vect)
 {
   incomingBuffer.buffer[incomingBuffer.head] = SPDR;
@@ -31,6 +37,7 @@ ISR(SPI_STC_vect)
   }
 }
 
+// Initializes the SPI peripheral device
 void startPeripheral()
 {
   pinMode(MISO, OUTPUT);
@@ -43,6 +50,7 @@ void startPeripheral()
   Logln("SPI Peripheral started.");
 }
 
+// Sends data from the provided buffer via SPI to Controller(mainCPU)
 void sendData(Buffer &buff)
 {
   if (buff.tail != buff.head) {
@@ -51,6 +59,7 @@ void sendData(Buffer &buff)
   }
 }
 
+// Moves data from the communication buffer to an internal buffer
 void moveBufferData(Buffer &commBuffer, Buffer &intBuffer)
 {
   while (commBuffer.tail != commBuffer.head)
@@ -65,5 +74,4 @@ void moveBufferData(Buffer &commBuffer, Buffer &intBuffer)
     }
   }
 }
-
 #endif

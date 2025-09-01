@@ -15,6 +15,8 @@ enum ButtonType : byte
   BLUE,
   RED_BLUE
 };
+
+// ADC value ranges for each button and the type of button it represents.
 struct Button
 {
   int lo;

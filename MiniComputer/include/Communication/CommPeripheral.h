@@ -1,6 +1,7 @@
 #pragma once
 #include <Config.h>
 #include <Wire.h>
+#include <SPI.h>
 #include <DataTypes/CommDataTypes.h>
 #include <DataTypes/MemoryDataTypes.h>
 

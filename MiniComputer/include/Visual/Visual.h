@@ -1,6 +1,10 @@
 #pragma once
 #include <Config.h>
 
+/*
+This file contains declarations for controlling an LED screen using shift registers in the Mini Computer project.
+It includes functions for initializing the shift register, writing data to it, printing images, animating frames, and setting up the screen.
+*/
 
 struct Shift_Register {
     byte SER;

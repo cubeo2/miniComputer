@@ -1,6 +1,11 @@
 #pragma once
 #include <Config.h>
 
+/*
+This file contains data types used for memory management in the Mini Computer project.
+*/
+
+// Memory Buffer Structure, used to manage a byte buffer with head and tail pointers for reading and writing data.
 struct Buffer
 {
     byte *buffer;
@@ -33,6 +38,7 @@ printString()
 };
 #endif
 
+// Data Types for memory management and data handling
 enum DataTypes : byte
 {
     INVALID,
@@ -65,8 +71,7 @@ struct DataPacket
     }
 };
 
-// File meta Data. This struct allows a maximum of MAXIMUM_FILES files to be monitored
-// at a time.
+// File Metadata Structure, used to manage file information such as filename and current chunk position. Th chunk position is incremented by BUFFER_SIZE for each subsequent chunk in order to keep track of progress through the file.
 struct FileMeta
 {
     String filename;

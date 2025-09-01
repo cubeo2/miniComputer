@@ -1,11 +1,15 @@
 #include <Config.h>
 #include <Memory/SDmem.h>
 
+/*
+This file contains functions for managing SD card memory in the Mini Computer project.
+*/
+
 #if MEMORY_CONNECT
 // Chip select pin for the Adafruit SD Card Shield
 const int chipSelect = MEMORY_CS;
 
-// Connect to SD memory
+// Connects to SD memory
 void connectSD() {
     Logln("Connecting to SD card...");
 
@@ -18,13 +22,14 @@ void connectSD() {
   Logln("SD card connected.");
 }
 
-//Creates File with input name
+// Creates File with input name
 void createFile(const char *filename)
 {
   File dataFile = SD.open(filename, FILE_WRITE);
   if (dataFile)
   {
-    dataFile.close(); // Close the file so the data is written
+    // Close the file so the data is written
+    dataFile.close();
     Log("File created: ");
     Logln(filename);
   }
@@ -35,7 +40,7 @@ void createFile(const char *filename)
   }
 }
 
-// Creates Folder
+// Creates Folder with folderName
 bool createFolder(const char *folderName)
 {
   String folder = "/";
@@ -57,7 +62,7 @@ void memoryWrite(const char *filename, const char *data)
   if (dataFile)
   {
     dataFile.println(data);
-    dataFile.close(); // Close the file so the data is written
+    dataFile.close(); 
     Log("Write successful to ");
     Logln(filename);
   }

@@ -2,6 +2,10 @@
 #include <Config.h>
 #include <DataTypes/RemoteDataTypes.h>
 
+/*
+This file contains function declarations and definitions related to the handheld controller used in the Mini Computer project.
+Its main purpose is to interpret button presses and send the appropriate data to the master microcontroller.
+*/
 
 #if REMOTE_CONNECT
 ButtonType decodeADC(const int &adc, const Button *buttons, const byte &pin);

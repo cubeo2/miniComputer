@@ -1,5 +1,10 @@
 #include <Config.h>
 
+/*
+This file contains debugging utilities for the Mini Computer project.
+It provides functions for serial logging and SD card logging, which can be enabled or disabled via configuration macros.
+*/
+
 #if SERIAL_LOG
 void startLog() {
     Serial.begin(9600);

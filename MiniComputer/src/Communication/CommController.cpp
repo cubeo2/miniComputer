@@ -3,7 +3,11 @@
 
 #if COMMUNICATION_PROTO
 
-// Start SPI master
+/*
+This translation unit contains code related to the SPI communication protocol used by the master microcontroller (the one with this code). It handles communication with peripheral devices such as memory, screen, remote controller, and audio modules.
+*/
+
+// Start SPI Controller
 void startCommController()
 {
   SPDR = READY;
@@ -18,8 +22,8 @@ void startCommController()
   digitalWrite(REMOTE_CONT_CS, HIGH);
 
   SPI.begin();
-  // SPI.beginTransaction(SPISettings(500000, MSBFIRST, SPI_MODE0));
 }
+
 // Check peripheral status, returns peripheral response flag
 CommFlag checkPerphStatus(DeviceMeta &device)
 {
@@ -83,40 +87,4 @@ bool sendData(DeviceMeta &device, DataPacket &data)
   digitalWrite(device.csPin, HIGH);
   return true;
 }
-
-#if MEMORY_CONNECT
-bool transferData(Buffer &data)
-{
-  if (data.head == data.tail)
-  {
-    // Buffer empty!
-    return false;
-  }
-  transferPacket packet;
-  byte numBytes;
-  if (data.head - data.tail > 32)
-  {
-    numBytes = 32;
-  }
-  else
-  {
-    numBytes = data.head - data.tail;
-  }
-  for (byte i = 0; i < numBytes; i++)
-  {
-    packet[i] = data.buffer[data.tail];
-
-    data.tail = (data.tail + 1) % BUFFER_SIZE;
-  }
-  return true;
-}
-
-bool receiveData(Buffer &data)
-{
-}
-
-void checkStatus(){
-  
-}
-#endif
 #endif

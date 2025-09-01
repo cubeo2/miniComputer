@@ -5,6 +5,10 @@
 #include <Remote/Remote.h>
 #include <Tests/test_SCREEN.h>
 
+/*
+This file contains the main setup and loop functions for the mainCPU in the Mini Computer project.
+*/
+
 // GLOBAL TIME VARIABLES
 unsigned long currentMillis;
 unsigned long lastMillis;

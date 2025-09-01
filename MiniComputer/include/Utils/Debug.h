@@ -1,6 +1,10 @@
 #pragma once
 #include <Config.h>
 
+/*
+This file contains debugging and logging utilities for the Mini Computer project.
+*/
+
 #if SERIAL_LOG
 void startLog();
 void Log(const char* message);
