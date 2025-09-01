@@ -126,7 +126,7 @@ Since the development of a mini-computer OS system is wide in scope, there are m
 ---
 
 <details close>
-<summary> Project Build Details </summary>
+<summary> ## Project Build Details </summary>
 
 ## Prerequisites
 
