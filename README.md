@@ -105,6 +105,28 @@ Since the development of a mini-computer OS system is wide in scope, there are m
 
 ---
 
+## Limitations and Future Work
+
+### Limitations
+- My electronics knowledge is not as in depth as my trade before was in industrial electrical generation, so the depth of the electronics aspect of this project is somewhat shallow, and could use future optimization.
+
+### Future Work
+  - Load games from memory
+  - Save game state
+  - Play scripted games
+  - Controller use (possible N64)
+  - Read self-developed script from SD memory
+  - Draw imagery on screen using remote controller
+  - Audio peripheral
+  - Double size of LED screen from 15w x 20l to 30w x 20l
+  - Add active high decoder chip to make more efficient use of Serial-In-Parallel-Out shift register
+  - Image generation tool with the image format of this firmware
+  - Random Number Generation using analogIn pin
+
+---
+
+<details open>
+<summary> Project Build Details </summary>
 ## Prerequisites
 
 In order to run this project, you will need to either create the physical architecture as described in this project, or utilize electronic/Arduino simulation software like Wokwi or CRUMB. If you decide to build the physical device, it is recommended to use the PlatformIO framework (as i did), which is easily found in Visual Studio Code (or something similar). 
@@ -156,6 +178,17 @@ Check Electronics Folder for datasheets on component information.
 **Misc**
 - Zip Ties
 - SD card formatted to FAT16/FAT32
+
+## Technologies Used
+
+- **Firmware/Embedded Systems**:
+    - C
+    - C++
+- **Version Control**
+    - SourceTree
+    - Github
+- **IDE**
+    - Visual Studio Code
 
 ## Installation & Setup
 
@@ -217,18 +250,7 @@ Plugins
 
 ---
 
-## Technologies Used
-
-- **Firmware/Embedded Systems**:
-    - C
-    - C++
-- **Version Control**
-    - SourceTree
-    - Github
-- **IDE**
-    - Visual Studio Code
-
-
+</details>
 
 ## Acknowledgments
 
@@ -237,26 +259,6 @@ Place all acknowledgements of other developer's code here
 - **AI**
     - AI was used during the devolvement of this project as a tool for learning, debugging, and getting basic code for testing electronic devices. Any code that was copied directly from ChatGPT is marked in the comments before the function or snippet that it was used (with notes on use).
     - Many comments for functions, variables, and other parts of the code were autocompleted using coPilot in visual studio, and edited by me in order to ensure they explain the code snippets properly
-
----
-
-## Limitations and Future Work
-
-### Limitations
-- My electronics knowledge is not as in depth as my trade before was in industrial electrical generation, so the depth of the electronics aspect of this project is somewhat shallow, and could use future optimization.
-
-### Future Work
-  - Load games from memory
-  - Save game state
-  - Play scripted games
-  - Controller use (possible N64)
-  - Read self-developed script from SD memory
-  - Draw imagery on screen using remote controller
-  - Audio peripheral
-  - Double size of LED screen from 15w x 20l to 30w x 20l
-  - Add active high decoder chip to make more efficient use of Serial-In-Parallel-Out shift register
-  - Image generation tool with the image format of this firmware
-  - Random Number Generation using analogIn pin
 
 ---
 
