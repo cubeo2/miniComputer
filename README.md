@@ -125,13 +125,30 @@ Since the development of a mini-computer OS system is wide in scope, there are m
 
 ---
 
-<details open>
-<summary> Project Build Details </summary>
-## Prerequisites
+<details close>
+<summary><h2>Project Build Details</h2></summary>
+
+# Prerequisites
 
 In order to run this project, you will need to either create the physical architecture as described in this project, or utilize electronic/Arduino simulation software like Wokwi or CRUMB. If you decide to build the physical device, it is recommended to use the PlatformIO framework (as i did), which is easily found in Visual Studio Code (or something similar). 
 
 Check Electronics Folder for datasheets on component information.
+
+## Dependencies
+
+### Production Dependencies
+
+- FrameworkArduino
+- lib0c5
+- libed2
+
+### Development Tools
+
+Plugins
+- PlatformIO 
+- Wokwi Simulator
+
+## Equipment
 
 **Tools**
 - Safety glasses
@@ -232,25 +249,10 @@ Check Electronics Folder for datasheets on component information.
 5. **Testing**
     - Currently testing is turned on and off by setting SERIAL_LOG in Config.h file to 1, this will compile all serial log functions and allow for monitoring on the serial monitor. 
     - Need to setup Unit Testing in the future, and debug functions for the LCD display
----
-
-## Dependencies
-
-### Production Dependencies
-
-- FrameworkArduino
-- lib0c5
-- libed2
-
-### Development Tools
-
-Plugins
-- PlatformIO 
-- Wokwi Simulator
-
----
 
 </details>
+
+---
 
 ## Acknowledgments
 
