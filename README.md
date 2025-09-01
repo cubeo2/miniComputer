@@ -45,14 +45,19 @@ The following videos showcase the various features of this project
 
 **Communication Controller <-> Peripheral**
 - https://youtube.com/shorts/BCQT_fFCa-Y?si=NfcC7NyBLbeWybPX 
+
 **LED Matrix Animation**
 - https://youtube.com/shorts/8DNGewOhFzs?si=wWJ9FM0QLCpO_Fhp 
+
 **Final Config of LED Screen**
 - https://youtube.com/shorts/yjZ7C30Nmt8?si=8dzmtLUisseGERvK 
+
 **LCD Menu Option**
 - https://youtube.com/shorts/vfJQR2MFc8s?si=w0WpJJJu1GZaaEHx 
+
 **SD to Buffer Struct**
 - https://youtube.com/shorts/R2Yr30r1lZY?si=9Q8nr9p4yIeCO1PR
+
 **Remote Controller**
 - https://youtube.com/shorts/GlhAYKKLTyQ?si=1o3H-QqVFuBq77iU 
 
