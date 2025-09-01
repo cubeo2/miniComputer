@@ -90,11 +90,11 @@ bool memoryRead(Buffer &buff, FileMeta &fileMeta)
     {
       if (numBytes > 0 && (buff.head - buff.tail) > numBytes)
       {
-        dataFile.read(buff.buffer, numBytes);
+        dataFile.read(buff.buffer, buff.size);
       }
       else
       {
-        dataFile.read(buff.buffer, sizeof(buff.buffer));
+        dataFile.read(buff.buffer, buff.size);
       }
       fileMeta.nextChunk();
       dataFile.close();

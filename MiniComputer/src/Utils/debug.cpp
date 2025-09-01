@@ -17,7 +17,6 @@ void startLog() {
 void Log(const char* message) {
     Serial.print(message);
 }
-
 void Logln(const char* message) {
     Serial.println(message);
 }
@@ -32,6 +31,12 @@ void Log(const String &message) {
 }
 void Logln(const String &message){
     Serial.print(message.c_str());
+}
+void Log(byte val, int format) {
+    Serial.print(val, format);
+}
+void Logln(byte val, int format) {
+    Serial.println(val, format);
 }
 #endif
 #if DEBUG_MEMORY

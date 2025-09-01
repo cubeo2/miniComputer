@@ -31,7 +31,7 @@ General Settings
 Settings ----
 */
 // LOGGING
-#define SERIAL_LOG 0
+#define SERIAL_LOG 1
 #include <Utils/Debug.h>
 #define LOG_SD 0
 // logging end -

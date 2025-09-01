@@ -11,10 +11,12 @@ struct Buffer
     byte *buffer;
     byte2 head;
     byte2 tail;
-    Buffer(byte2 bufferSize)
+    byte2 numBytes = 0;
+    byte2 size;
+    Buffer(byte2 bufferSize) : size(bufferSize)
     {
         buffer = new byte[bufferSize];
-        memset(buffer, 0, sizeof(buffer));
+        memset(buffer, 0, bufferSize);
         head = 0;
         tail = 0;
     }
@@ -22,21 +24,38 @@ struct Buffer
     {
         delete[] buffer;
     }
-};
-#if SERIAL_LOG
-void
-printString()
-{
-    for (byte i = 0; i < sizeof(buffer); i++)
-    {
-        Log(buffer[i]);
-        Log(" ");
-        bytesPrinted++;
 
-        Logln("");
+#if SERIAL_LOG
+    void printString()
+    {
+        byte2 bytesPrinted = 0;
+        for (byte i = 0; i < size / 16; i++)
+        {
+            for (byte j = 0; j < 16; j++)
+            {
+                Log(buffer[bytesPrinted], HEX);
+                Log(" ");
+                bytesPrinted++;
+            }
+            Logln("");
+        }
+#endif
+    };
+    void clear()
+    {
+        memset(buffer, 0, size);
+        head = 0;
+        tail = 0;
+    }
+    bool isEmpty()
+    {
+        return head == tail;
+    }
+    bool isFull()
+    {
+        return ((head + 1) % size) == tail;
     }
 };
-#endif
 
 // Data Types for memory management and data handling
 enum DataTypes : byte

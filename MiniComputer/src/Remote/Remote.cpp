@@ -1,5 +1,6 @@
 #include <Config.h>
 #include <Communication/CommPeripheral.h>
+#include <DataTypes/RemoteDataTypes.h>
 #include <Remote/Remote.h>
 
 /*
@@ -55,7 +56,7 @@ ButtonType decodeADC(const int &adc, const Button *buttons, const byte &pin)
 }
 
 // ENSURES A STABLE ADC VALUE IS ESTABLISHED BEFORE CHECKING WHICH BUTTON HAS BEEN PUSHED. Written by Chat GPT 4.1 and modified by Blair C. Tate (aka Cubeo).
-int stableRead(int pin)
+int stableRead(byte pin)
 {
   const byte delayMs = 5;
   int lastADC = analogRead(pin);
@@ -69,26 +70,35 @@ int stableRead(int pin)
     {
       Logln("Unstable ADC from Controller");
       Logln(abs(currentADC - lastADC));
+      Logln("-----");
+
       return 2000;
     }
     lastADC = (currentADC + lastADC) / 2;
   }
+  // Log("Last ADC: ");
+  // Logln(lastADC);
+  // Logln("-----");
   return lastADC;
 }
 
 #if SERIAL_LOG
 // LOGS WHICH BUTTONS HAVE BEEN PRESSED TO SERIAL OUTPUT.
-void logButtonsPressed(ButtonType *types)
+void logButtonsPressed(int type)
 {
-  for (byte i = 1; i <= 2; i++)
+  byte buttonVals[2] = {
+    type & 0x0F,
+    (type & 0xF0) >> 4
+  };
+  for (byte i = 0; i < 2; i++)
   {
     Log("Button ");
-    Log((size_t)i);
+    Log((size_t)i + 1);
     Log(": ");
-    switch (types[i - 1])
+    switch (buttonVals[i])
     {
-    case NONE:
-      Logln("NONE");
+    case NO_PRESS:
+      Logln("NO_PRESS");
       break;
     case UP:
       Logln("UP");
@@ -114,7 +124,7 @@ void logButtonsPressed(ButtonType *types)
     case RED_BLUE:
       Logln("RED_BLUE");
       break;
-    case INVALID:
+    case INVALID_BUTTON:
       Logln("INVALID");
       break;
     default:
@@ -122,6 +132,7 @@ void logButtonsPressed(ButtonType *types)
       break;
     };
   }
+  Logln("-----");
 }
 #endif
 
@@ -135,13 +146,17 @@ int checkForCommand()
   const int errorVal = 2000;
 
   // Checks the value of the action buttons pin
+
   buttonVal = stableRead(ACTION_BUTTONS);
+  Log("Action ADC: ");
+  Logln(buttonVal);
   if (buttonVal == errorVal)
   {
     pressedButtons = INVALID_BUTTON;
     return pressedButtons;
   }
   actionButtons = decodeADC(buttonVal, buttons, ACTION_BUTTONS);
+
   pressedButtons = actionButtons;
 
   if (actionButtons == START)
@@ -151,19 +166,44 @@ int checkForCommand()
   }
   // Checks the value of the direction buttons pin
   buttonVal = stableRead(DIRECTION_BUTTONS);
+  Log("Direction ADC: ");
+  Logln(buttonVal);
   if (buttonVal == errorVal)
   {
     pressedButtons = INVALID_BUTTON;
     return pressedButtons;
   }
   directionButtons = decodeADC(buttonVal, buttons, DIRECTION_BUTTONS);
-#if SERIAL_LOG
-  logButtonsPressed(pressedButtons);
-#endif
+
   delay(10);
 
-  pressedButtons = ((pressedButtons & 0xF0) | directionButtons << 4) | actionButtons;
+  pressedButtons = ((pressedButtons & 0xF0) | (directionButtons << 4)) | actionButtons;
+
+  logButtonsPressed(pressedButtons);
+  Log("Pressed Buttons Val: ");
+  Logln(pressedButtons, HEX);
+  Logln("");
 
   return pressedButtons;
+}
+
+void setupRemote()
+{
+  pinMode(ACTION_BUTTONS, INPUT);
+  pinMode(DIRECTION_BUTTONS, INPUT);
+  Logln("Remote Controller Setup Complete");
+}
+
+void setup()
+{
+  startLog();
+  // setupRemote();
+  Log("Setup started...");
+}
+
+void loop()
+{
+  checkForCommand();
+  delay(1000);
 }
 #endif

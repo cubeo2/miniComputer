@@ -13,6 +13,7 @@ int stableRead(int pin);
 void sendInstruction();
 void logButtonsPressed(ButtonType *types);
 int checkForCommand();
+void setupRemote();
 
 #else
 inline ButtonType decodeADC(const int &adc, const Button *buttons, const byte &pin){}
@@ -20,4 +21,5 @@ inline int stableRead(int pin){}
 inline void sendInstruction(){}
 inline void logButtonsPressed(ButtonType *types){}
 inline int checkForCommand(){}
+inline void setupRemote(){}
 #endif

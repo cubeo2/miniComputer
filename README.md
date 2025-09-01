@@ -6,16 +6,97 @@ Blair C. Tate aka cubeo
 
 ## Overview
 
-This project aims to create a mini-computer system capable of doing small tasks and playing small scripted games. The project is broken into multiple microcontrollers, the main controller (mainCPU) which gets data from SD memory storage, and monitors remoteController inputs, and peripheral microcontroller devices such as audio and visual. 
+For this project I set out to learn more about firmware and embedded systems development within the Arduino ATmega328P microcontroller architecture by developing the code and electronic circuitry of this system from scratch. The final goal of the project is to develop a light-weight operating system capable of controlling various peripherals and playing little video games. The project is broken into multiple microcontrollers, the main controller (mainCPU) which gets data from SD memory storage, monitoring remoteController inputs, and sending data to peripheral microcontroller devices such as audio and visual. The second microcontroller is being used to recieve data from the mainCPU and then to interpret and use that data with the audio/visual peripherals.
 
-This project is currently in an integration/prototyping state for version 0.1, so functions from various translation units are being reworked to ensure smooth functionality. Documentation is also in progress, as I have not had time to draw out the proper electrical schematics and get exact counts on all electronic components/Lego pieces utilized.
+The scope of this project is quite large, so it was broken down into smaller components: mainCPU, LED Screen, Audio, SD Memory, and a Remote Controller. Each component of this project is in a good place foundationaly, but will require reworking and further development during the integration and mainCPU logic development cycle.
 
-This project was an opportunity to learn firmware/hardware development, as well as to learn C and C++. 
+- **Main CPU**
+    - Controls the flow of data from one device to another via read/write memory protocols, SPI data transfer protocols and flow logic to determine which tasks needs to be done, and when.
+    - **Future** Currently in the mainCPU logic and integration phase of the project, so the mainCPU is only able to read and write to memory, and transfer small bits of data to other microcontrollers.
+- **SD Memory**
+    - The adafruit SD memory card shield is directly connected to the mainCPU arduino, so the mainCPU dictates when and how to read from the SD card
+    - Currently memory is stored as raw bytes within a text file, and is then interpreted by the mainCPU based on a data packet structure. The first byte of a data packet is the dataType, the next 2bytes is the meta (good for duration info for animations) and the rest is the actual data. For simplicity dataPackets are a fixed size, but eventually will be expanded upon for more flexibility
+    - **Future** Eventually would like to create a header for different file types to hold different metadata about its contents
+    - Directly connected to mainCPU Arduino Uno
+- **LED Screen**
+    - The LED screen takes a 40B data packet(image) and then outputs those values to the shift registers to print an image
+    - The LED screen is made up of a 15x20 LED matrix, 5 shift registers, and two sets of transistors. It takes in 40 Bytes of data and is able to turn on 1 of 300 LEDs within the matrix using a multiplexing protocol
+    - The refresh rate is so quick, though, so it is able to look like a stable image when it starts printing
+    - Currently works off of the 5V output from the output pins of the arduino, but it is designed to take an external power source for higher duty cycles
+    - Controlled by 4 wires for the shift register, 1 for power, and 1 for ground (one optional external power source)
+    - **Future** Currently the LED matrix is not fully integrated with memory, but you can hard code it to show particular patterns if desired. The main roadblock is integrating everything together, it needs the mainCPU logic and SPI transfer protocols finished in order print images via a user command
+- **LCD Screen**
+    - The LCD screen displays current will display the system menus so that the user can tell the mainCPU what to do next. 
+    - **Future** It is currently in early development, so right now it only has the basic functions and dataTypes needed for the described functionality
+- **Remote Controller**
+    - The remote controller uses two separate clusters of buttons and resistors in order to create a specific voltage drop when one or more buttons is pressed
+    - The mainCPU Arduino then interprets the ADC value and translates it into a bitpacked command variable to be used within the main logic
+
+This project is currently in the integration stage for version 0.1, so functions from various translation units are being reworked to ensure smooth functionality. Documentation is also in progress, as I have not had time to draw out the proper electrical schematics and get exact counts on all electronic components/Lego pieces utilized.
+
+---
+
+## Project Images Videos and Notes
+
+- **See the Schematic&ProcessNotes folder for more details about development**
 
 **Links to Videos**
-The following videos showcase the various features that are currently working for this project
+The following videos showcase the various features of this project
 
--
+**Communication Controller <-> Peripheral**
+- https://youtube.com/shorts/BCQT_fFCa-Y?si=NfcC7NyBLbeWybPX 
+**LED Matrix Animation**
+- https://youtube.com/shorts/8DNGewOhFzs?si=wWJ9FM0QLCpO_Fhp 
+**Final Config of LED Screen**
+- https://youtube.com/shorts/yjZ7C30Nmt8?si=8dzmtLUisseGERvK 
+**LCD Menu Option**
+- https://youtube.com/shorts/vfJQR2MFc8s?si=w0WpJJJu1GZaaEHx 
+**SD to Buffer Struct**
+- https://youtube.com/shorts/R2Yr30r1lZY?si=9Q8nr9p4yIeCO1PR
+**Remote Controller**
+- https://youtube.com/shorts/GlhAYKKLTyQ?si=1o3H-QqVFuBq77iU 
+
+---
+
+## Usage
+
+The main usage of this product is to play small video-games developed specifically for this system.
+
+**BootUp**
+Once the system boots, users will be able to navigate the main UI and choose from various games, and change some settings.
+
+**Video-Games**
+After selecting a game users will be able to play that game. From the game, users will be able to open a system menu allowing them to navigate back to the system menu, or change some settings.
+
+**System Settings**
+Forthcoming
+
+---
+
+## Current Features
+- **Remote Controler**
+    - Input Command via button press
+- **Memory**
+    - Get 512B of data from SD card
+    - Transfer byte between Arduinos
+- **Displays**
+    - Display a 40B image on screen
+    - Display data on LCD Screen
+
+## Features in Development
+- **Controls**
+    - Main Menu Navigation
+    - Option Selection
+- **Integration**
+    - Transfer of data packets from one arduino's buffer to another
+    - Command loop for monitoring user input and outputting to the appropriate device/function.
+    - Interpretation of memory for use by appropriate device
+- **Screen**
+    - Clean up image printing on LED Screen to be smoother and more consistent
+    - 
+
+## Future Features
+Since the development of a mini-computer OS system is wide in scope, there are many things to add and continue developing. Here are a few of the planned features for the future:
 
 ---
 
@@ -131,55 +212,18 @@ Plugins
 
 ---
 
-## Current Features
-- **Remote Controler**
-    - Input Command via button press
-- **Memory**
-    - Get 512B of data from SD card
-    - Transfer byte between Arduinos
-- **Displays**
-    - Display a 40B image on screen
-    - Display data on LCD Screen
-
-## Features in Development
-- **Controls**
-    - Main Menu Navigation
-    - Option Selection
-- **Integration**
-    - Transfer of data packets from one arduino's buffer to another
-    - Command loop for monitoring user input and outputting to the appropriate device/function.
-    - Interpretation of memory for use by appropriate device
-- **Screen**
-    - Clean up image printing on LED Screen to be smoother and more consistent
-    - 
-
-## Future Features
-Since the development of a mini-computer OS system is wide in scope, there are many things to add and continue developing. Here are a few of the planned features for the future:
-
----
-
 ## Technologies Used
 
-- **Firmware**:
+- **Firmware/Embedded Systems**:
     - C
     - C++
+- **Version Control**
+    - SourceTree
+    - Github
+- **IDE**
+    - Visual Studio Code
 
----
 
-## Usage
-
-The main usage of this product is to play small video-games developed specifically for this system.
-
-**BootUp**
-Once the system boots, users will be able to navigate the main UI and choose from various games, and change some settings.
-
-**Video-Games**
-After selecting a game users will be able to play that game. From the game, users will be able to open a system menu allowing them to navigate back to the system menu, or change some settings.
-
-**System Settings**
-Forthcoming
-
----
 
 ## Acknowledgments
 
@@ -218,7 +262,7 @@ This project is licensed under the ISC License. See the [LICENSE](LICENSE) file 
 ```
 ISC License
 
-Copyright (c) [Year] [Your Name/Organization Name]
+Copyright (c) [2025] [Blair C. Tate / aka Cubeo]
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above

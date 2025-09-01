@@ -78,7 +78,7 @@ void setup() {
     lcdPrint("hello, world!");
 }
 
-String message[] = {"> Line 1", "Line 2", "Line 3", "Line 4"};
+String message[] = {"> Test 1", "Line 2", "Line 3", "Line 4"};
 
 void loop() {
 

@@ -13,6 +13,9 @@ This file contains the main setup and loop functions for the mainCPU in the Mini
 unsigned long currentMillis;
 unsigned long lastMillis;
 
+Buffer buffer1(BUFFER_SIZE);
+FileMeta file = {"image.txt", 0};
+
 DeviceMeta deviceMeta[] = 
 {
     {CONTROLLER, REMOTE_CONT_CS, false},
@@ -36,29 +39,29 @@ void setup()
 bool first = true;
 void loop()
 {
-
-    
-   
     // sendData(deviceMeta[CONTROLLER], 0x05);
-    /*
-    CONTROLLER TESTS
-    */
-    // sendInstruction();
+
     /*
     MEMORY TESTS
     */
-    // if (first)
-    // {
-    //     Log("Next Chunk: ");
-    //     Logln(file.chunk);
-    //     memoryRead(buffer1, file);
-    //     Log("Next Chunk: ");
-    //     Logln(file.chunk);
-    //     memoryRead(buffer1, file);
-    //     Log("Next Chunk: ");
-    //     Logln(file.chunk);
-    //     first = false;
-    // }
+    if (first)
+    {
+        Log("Next Chunk: ");
+        Logln(file.chunk);
+        memoryRead(buffer1, file);
+        buffer1.printString();
+        
+        Log("Next Chunk: ");
+        Logln(file.chunk);
+        memoryRead(buffer1, file);
+        buffer1.printString();
+        
+        buffer1.clear();
+        buffer1.printString();
+        Log("Next Chunk: ");
+        Logln(file.chunk);
+        first = false;
+    }
 
     // checkForCommand();
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <Config.h>
+#include <DataTypes/RemoteDataTypes.h>
 #include <LiquidCrystal.h>
 
 /*
