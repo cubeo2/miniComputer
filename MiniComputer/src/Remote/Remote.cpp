@@ -194,16 +194,16 @@ void setupRemote()
   Logln("Remote Controller Setup Complete");
 }
 
-void setup()
-{
-  startLog();
-  // setupRemote();
-  Log("Setup started...");
-}
+// void setup()
+// {
+//   startLog();
+//   // setupRemote();
+//   Log("Setup started...");
+// }
 
-void loop()
-{
-  checkForCommand();
-  delay(1000);
-}
+// void loop()
+// {
+//   checkForCommand();
+//   delay(1000);
+// }
 #endif

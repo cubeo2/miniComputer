@@ -43,9 +43,6 @@ This project is currently in the integration stage for version 0.1, so functions
 **Links to Videos**
 The following videos showcase the various features of this project
 
-**Communication Controller <-> Peripheral**
-- https://youtube.com/shorts/BCQT_fFCa-Y?si=NfcC7NyBLbeWybPX 
-
 **LED Matrix Animation**
 - https://youtube.com/shorts/8DNGewOhFzs?si=wWJ9FM0QLCpO_Fhp 
 
@@ -60,6 +57,9 @@ The following videos showcase the various features of this project
 
 **Remote Controller**
 - https://youtube.com/shorts/GlhAYKKLTyQ?si=1o3H-QqVFuBq77iU 
+
+**Communication Controller <-> Peripheral**
+- https://youtube.com/shorts/BCQT_fFCa-Y?si=NfcC7NyBLbeWybPX 
 
 ---
 

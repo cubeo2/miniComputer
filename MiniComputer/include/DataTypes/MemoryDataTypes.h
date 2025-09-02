@@ -33,7 +33,7 @@ struct Buffer
         {
             for (byte j = 0; j < 16; j++)
             {
-                Log(buffer[bytesPrinted], HEX);
+                Log(buffer[bytesPrinted]);
                 Log(" ");
                 bytesPrinted++;
             }

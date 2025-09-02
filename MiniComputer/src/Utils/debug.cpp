@@ -7,7 +7,7 @@ It provides functions for serial logging and SD card logging, which can be enabl
 
 #if SERIAL_LOG
 void startLog() {
-    Serial.begin(9600);
+    Serial.begin(115200);
     while (!Serial) {
         ; // wait for serial port to connect (needed for Leonardo/Micro)
     }
