@@ -259,7 +259,7 @@ Plugins
 - **External Code**
 Place all acknowledgements of other developer's code here 
 - **AI**
-    - AI was used during the devolvement of this project as a tool for learning, debugging, and getting basic code for testing electronic devices. Any code that was copied directly from ChatGPT is marked in the comments before the function or snippet that it was used (with notes on use).
+    - AI was used during the development of this project as a tool for learning, debugging, and getting basic code for testing electronic devices. Any code that was copied directly from ChatGPT is marked in the comments before the function or snippet that it was used (with notes on use).
     - Many comments for functions, variables, and other parts of the code were autocompleted using coPilot in visual studio, and edited by me in order to ensure they explain the code snippets properly
 
 ---
